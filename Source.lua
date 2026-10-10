@@ -1049,6 +1049,21 @@ function Container:AddDropdown(Name, Info)
 	local Shell = NewDropdownShell(Card, Name)
 	local List, Value, Box = Shell.List, Shell.Value, Shell.Box
 	local Buttons = {}
+	local RowHeight, MaxHeight = 36, 180
+	local Scroll = New("ScrollingFrame", {
+		Size = UDim2.new(1, 0, 0, math.min(math.max(#Values, 1) * RowHeight, MaxHeight)),
+		BackgroundTransparency = 1,
+		CanvasSize = UDim2.new(),
+		AutomaticCanvasSize = Enum.AutomaticSize.Y,
+		ScrollBarThickness = 3,
+		ScrollBarImageColor3 = Theme.Accent,
+		ScrollingDirection = Enum.ScrollingDirection.Y,
+		ElasticBehavior = Enum.ElasticBehavior.Never,
+		Parent = List,
+	})
+	RegisterAccentColor(Scroll, "ScrollBarImageColor3", "Accent")
+	New("UIListLayout", { SortOrder = Enum.SortOrder.LayoutOrder, Parent = Scroll })
+	New("UIPadding", { PaddingRight = UDim.new(0, 6), Parent = Scroll })
 
 	local function Close()
 		List.Visible = false
@@ -1072,7 +1087,7 @@ function Container:AddDropdown(Name, Info)
 
 	for OptIndex, Option in ipairs(Values) do
 		local Button = New("TextButton", {
-			Size = UDim2.new(1, 0, 0, 36),
+			Size = UDim2.new(1, 0, 0, RowHeight),
 			BackgroundTransparency = 1,
 			Text = tostring(Option),
 			Font = Enum.Font.GothamMedium,
@@ -1080,7 +1095,7 @@ function Container:AddDropdown(Name, Info)
 			TextColor3 = Theme.Muted,
 			TextXAlignment = Enum.TextXAlignment.Left,
 			LayoutOrder = OptIndex,
-			Parent = List,
+			Parent = Scroll,
 		})
 		New("UIPadding", { PaddingLeft = UDim.new(0, 10), Parent = Button })
 		Buttons[Option] = Button
@@ -1095,6 +1110,7 @@ function Container:AddDropdown(Name, Info)
 		end
 		if OpenDropdown then OpenDropdown() end
 		Shell.SetChainZ(20)
+		Scroll.CanvasPosition = Vector2.new(0, 0)
 		List.Visible = true
 		OpenDropdown = Close
 	end)
@@ -1110,6 +1126,21 @@ function Container:AddMultiDropdown(Name, Info)
 	local Shell = NewDropdownShell(Card, Name)
 	local List, Value, Box = Shell.List, Shell.Value, Shell.Box
 	local Buttons = {}
+	local RowHeight, MaxHeight = 34, 180
+	local Scroll = New("ScrollingFrame", {
+		Size = UDim2.new(1, 0, 0, math.min(math.max(#Values, 1) * RowHeight, MaxHeight)),
+		BackgroundTransparency = 1,
+		CanvasSize = UDim2.new(),
+		AutomaticCanvasSize = Enum.AutomaticSize.Y,
+		ScrollBarThickness = 3,
+		ScrollBarImageColor3 = Theme.Accent,
+		ScrollingDirection = Enum.ScrollingDirection.Y,
+		ElasticBehavior = Enum.ElasticBehavior.Never,
+		Parent = List,
+	})
+	RegisterAccentColor(Scroll, "ScrollBarImageColor3", "Accent")
+	New("UIListLayout", { SortOrder = Enum.SortOrder.LayoutOrder, Parent = Scroll })
+	New("UIPadding", { PaddingRight = UDim.new(0, 6), Parent = Scroll })
 	local Chosen = {}
 
 	local function Close()
@@ -1147,10 +1178,10 @@ function Container:AddMultiDropdown(Name, Info)
 
 	for OptIndex, Option in ipairs(Values) do
 		local Button = New("TextButton", {
-			Size = UDim2.new(1, 0, 0, 34),
+			Size = UDim2.new(1, 0, 0, RowHeight),
 			BackgroundTransparency = 1,
 			LayoutOrder = OptIndex,
-			Parent = List,
+			Parent = Scroll,
 		})
 		local OptionLabel = New("TextLabel", {
 			Position = UDim2.fromOffset(10, 0),
@@ -1182,6 +1213,7 @@ function Container:AddMultiDropdown(Name, Info)
 		end
 		if OpenDropdown then OpenDropdown() end
 		Shell.SetChainZ(20)
+		Scroll.CanvasPosition = Vector2.new(0, 0)
 		List.Visible = true
 		OpenDropdown = Close
 	end)
