@@ -3543,21 +3543,23 @@ function Library:CreateWindow(Config)
 	BuildNotify()
 	BuildWatermark()
 
-	local Dragging, DragStart, StartCenter = false, nil, nil
+	local Dragging, DragStart, StartPosition = false, nil, nil
 	DragHandle.InputBegan.Connect(DragHandle.InputBegan, function(Input)
 		if IsPress(Input) then
 			Dragging = true
 			DragStart = Input.Position
-			StartCenter = Main.AbsolutePosition + Main.AbsoluteSize / 2
+			StartPosition = Main.Position
 		end
 	end)
 	Connect(UserInputService.InputChanged, function(Input)
 		if Dragging and IsMove(Input) then
 			local Delta = Input.Position - DragStart
 			local View = Gui.AbsoluteSize
+			local CenterX = StartPosition.X.Scale * View.X + StartPosition.X.Offset + Delta.X
+			local CenterY = StartPosition.Y.Scale * View.Y + StartPosition.Y.Offset + Delta.Y
 			Main.Position = UDim2.fromOffset(
-				math.clamp(StartCenter.X + Delta.X, 0, View.X),
-				math.clamp(StartCenter.Y + Delta.Y, 0, View.Y)
+				math.clamp(CenterX, 0, View.X),
+				math.clamp(CenterY, 0, View.Y)
 			)
 		end
 	end)
