@@ -2442,9 +2442,29 @@ local function NewModal(Title, Width, Height)
 end
 
 local function NewSideButton(Icons)
+	local SlotWidth, SlotGap = 46, 22
+	local SlotPitch = SlotWidth + SlotGap
+	if SideSlots > 0 then
+		local Separator = New("Frame", {
+			Position = UDim2.fromOffset(16 + SlotPitch * SideSlots - SlotGap / 2, 669 + 10),
+			Size = UDim2.fromOffset(1, SlotWidth - 20),
+			BackgroundColor3 = Theme.LineLight,
+			Parent = Sidebar,
+		})
+		New("UIGradient", {
+			Rotation = 90,
+			Transparency = NumberSequence.new({
+				NumberSequenceKeypoint.new(0, 1),
+				NumberSequenceKeypoint.new(0.25, 0.3),
+				NumberSequenceKeypoint.new(0.75, 0.3),
+				NumberSequenceKeypoint.new(1, 1),
+			}),
+			Parent = Separator,
+		})
+	end
 	local Button = New("TextButton", {
-		Position = UDim2.fromOffset(16 + 52 * SideSlots, 669),
-		Size = UDim2.fromOffset(46, 46),
+		Position = UDim2.fromOffset(16 + SlotPitch * SideSlots, 669),
+		Size = UDim2.fromOffset(SlotWidth, SlotWidth),
 		BackgroundColor3 = Color3.new(1, 1, 1),
 		Parent = Sidebar,
 	})
