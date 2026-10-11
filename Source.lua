@@ -1125,8 +1125,23 @@ function Container:AddMultiDropdown(Name, Info)
 	local Values = Info.Values or Info.Options or {}
 	local Shell = NewDropdownShell(Card, Name)
 	local List, Value, Box = Shell.List, Shell.Value, Shell.Box
+	Shell.Layout.Padding = UDim.new(0, 4)
 	local Buttons = {}
 	local RowHeight, MaxHeight = 34, 180
+
+	local Actions = New("Frame", {
+		Size = UDim2.new(1, 0, 0, 30),
+		BackgroundTransparency = 1,
+		LayoutOrder = 1,
+		Parent = List,
+	})
+	New("UIListLayout", {
+		FillDirection = Enum.FillDirection.Horizontal,
+		SortOrder = Enum.SortOrder.LayoutOrder,
+		Padding = UDim.new(0, 6),
+		Parent = Actions,
+	})
+
 	local Scroll = New("ScrollingFrame", {
 		Size = UDim2.new(1, 0, 0, math.min(math.max(#Values, 1) * RowHeight, MaxHeight)),
 		BackgroundTransparency = 1,
@@ -1136,6 +1151,7 @@ function Container:AddMultiDropdown(Name, Info)
 		ScrollBarImageColor3 = Theme.Accent,
 		ScrollingDirection = Enum.ScrollingDirection.Y,
 		ElasticBehavior = Enum.ElasticBehavior.Never,
+		LayoutOrder = 2,
 		Parent = List,
 	})
 	RegisterAccentColor(Scroll, "ScrollBarImageColor3", "Accent")
@@ -1175,6 +1191,46 @@ function Container:AddMultiDropdown(Name, Info)
 	end
 
 	ControlBinds[Key] = Set
+
+	local function MakeAction(Text, Order, Handler)
+		local Holder = New("Frame", {
+			Size = UDim2.new(0.5, -3, 1, 0),
+			BackgroundColor3 = Color3.new(1, 1, 1),
+			LayoutOrder = Order,
+			Parent = Actions,
+		})
+		Corner(Holder, 6)
+		Gradient(Holder, Theme.ElementTop, Theme.ElementBottom, 90)
+		Stroke(Holder, Theme.Line, 1, 0.3)
+		local Button = New("TextButton", {
+			Size = UDim2.fromScale(1, 1),
+			BackgroundTransparency = 1,
+			Text = Text,
+			Font = Enum.Font.GothamMedium,
+			TextSize = 15,
+			TextColor3 = Theme.Sub,
+			Parent = Holder,
+		})
+		Button.MouseEnter.Connect(Button.MouseEnter, function()
+			Tween(Button, { TextColor3 = Theme.Text })
+		end)
+		Button.MouseLeave.Connect(Button.MouseLeave, function()
+			Tween(Button, { TextColor3 = Theme.Sub })
+		end)
+		Button.Activated.Connect(Button.Activated, Handler)
+	end
+
+	MakeAction("Select all", 1, function()
+		for _, Option in ipairs(Values) do
+			Chosen[Option] = true
+		end
+		Apply()
+	end)
+
+	MakeAction("Deselect all", 2, function()
+		Chosen = {}
+		Apply()
+	end)
 
 	for OptIndex, Option in ipairs(Values) do
 		local Button = New("TextButton", {
