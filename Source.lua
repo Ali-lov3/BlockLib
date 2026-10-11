@@ -84,22 +84,22 @@ local function IsAsset(Icon)
 end
 
 local Theme = {
-	WindowTop = Color3.fromRGB(28, 32, 44),
-	WindowBottom = Color3.fromRGB(15, 17, 24),
-	CardTop = Color3.fromRGB(32, 36, 50),
-	CardBottom = Color3.fromRGB(24, 27, 38),
-	ElementTop = Color3.fromRGB(40, 45, 61),
-	ElementBottom = Color3.fromRGB(30, 34, 47),
-	Line = Color3.fromRGB(42, 46, 60),
-	LineLight = Color3.fromRGB(62, 68, 88),
-	SelectedTop = Color3.fromRGB(40, 45, 61),
-	SelectedBottom = Color3.fromRGB(30, 34, 46),
-	Accent = Color3.fromRGB(22, 190, 165),
-	AccentLight = Color3.fromRGB(40, 226, 196),
-	AccentDark = Color3.fromRGB(12, 140, 122),
-	Text = Color3.fromRGB(238, 240, 246),
-	Sub = Color3.fromRGB(150, 155, 170),
-	Muted = Color3.fromRGB(116, 122, 140),
+	WindowTop = Color3.fromRGB(24, 24, 24),
+	WindowBottom = Color3.fromRGB(10, 10, 10),
+	CardTop = Color3.fromRGB(30, 30, 30),
+	CardBottom = Color3.fromRGB(22, 22, 22),
+	ElementTop = Color3.fromRGB(40, 40, 40),
+	ElementBottom = Color3.fromRGB(30, 30, 30),
+	Line = Color3.fromRGB(44, 44, 44),
+	LineLight = Color3.fromRGB(68, 68, 68),
+	SelectedTop = Color3.fromRGB(40, 40, 40),
+	SelectedBottom = Color3.fromRGB(30, 30, 30),
+	Accent = Color3.fromRGB(235, 235, 235),
+	AccentLight = Color3.fromRGB(255, 255, 255),
+	AccentDark = Color3.fromRGB(130, 130, 130),
+	Text = Color3.fromRGB(240, 240, 240),
+	Sub = Color3.fromRGB(158, 158, 158),
+	Muted = Color3.fromRGB(122, 122, 122),
 }
 
 local DefaultAccent = { Theme.Accent, Theme.AccentLight, Theme.AccentDark }
@@ -263,7 +263,7 @@ local function BuildPicker()
 	local ColorPopup = New("Frame", {
 		Name = "ColorPopup",
 		Size = UDim2.fromOffset(PickerWidth, PickerHeight),
-		BackgroundColor3 = Color3.fromRGB(30, 33, 44),
+		BackgroundColor3 = Color3.fromRGB(30, 30, 30),
 		Active = true,
 		ZIndex = 301,
 		Parent = ColorCatcher,
@@ -637,7 +637,7 @@ local function NewField(Card, Name)
 		Parent = Block,
 	})
 	Corner(BoxFrame, 7)
-	Gradient(BoxFrame, Color3.fromRGB(31, 34, 45), Color3.fromRGB(26, 28, 38), 90)
+	Gradient(BoxFrame, Color3.fromRGB(32, 32, 32), Color3.fromRGB(26, 26, 26), 90)
 	local BoxStroke = Stroke(BoxFrame, Theme.Line, 1, 0.3)
 	return Block, BoxFrame, BoxStroke
 end
@@ -667,7 +667,7 @@ local function NewDropdownShell(Card, Name)
 		Position = UDim2.new(0, 0, 1, 12),
 		Size = UDim2.new(1, 0, 0, 0),
 		AutomaticSize = Enum.AutomaticSize.Y,
-		BackgroundColor3 = Color3.fromRGB(19, 20, 27),
+		BackgroundColor3 = Color3.fromRGB(18, 18, 18),
 		Visible = false,
 		ZIndex = 20,
 		Parent = BoxFrame,
@@ -798,7 +798,7 @@ function Container:AddToggle(Name, Info)
 		Parent = Row,
 	})
 	Corner(Switch, 13)
-	Gradient(Switch, Color3.fromRGB(30, 34, 47), Color3.fromRGB(38, 43, 58), 90)
+	Gradient(Switch, Color3.fromRGB(30, 30, 30), Color3.fromRGB(40, 40, 40), 90)
 	local OnLayer = New("Frame", {
 		Size = UDim2.fromScale(1, 1),
 		BackgroundColor3 = Color3.new(1, 1, 1),
@@ -827,7 +827,10 @@ function Container:AddToggle(Name, Info)
 		State = Value and true or false
 		Flags[Key] = State
 		Tween(OnLayer, { BackgroundTransparency = State and 0 or 1 })
-		Tween(Knob, { Position = State and UDim2.new(1, -22, 0.5, 0) or UDim2.new(0, 4, 0.5, 0) })
+		Tween(Knob, {
+			Position = State and UDim2.new(1, -22, 0.5, 0) or UDim2.new(0, 4, 0.5, 0),
+			BackgroundColor3 = State and Color3.fromRGB(14, 14, 14) or Color3.new(1, 1, 1),
+		})
 		Tween(Label, { TextColor3 = State and Theme.Text or Theme.Muted })
 		if Group then Group.Set(State) end
 	end
@@ -970,7 +973,7 @@ function Container:AddSlider(Name, Info)
 		Parent = Block,
 	})
 	Corner(Track, 6)
-	Gradient(Track, Color3.fromRGB(11, 13, 19), Color3.fromRGB(19, 22, 31), 90)
+	Gradient(Track, Color3.fromRGB(10, 10, 10), Color3.fromRGB(20, 20, 20), 90)
 	local Fill = New("Frame", {
 		Size = UDim2.fromScale(0, 1),
 		BackgroundColor3 = Color3.new(1, 1, 1),
@@ -989,7 +992,8 @@ function Container:AddSlider(Name, Info)
 		Parent = Track,
 	})
 	Corner(Knob, 8)
-	Gradient(Knob, Color3.new(1, 1, 1), Color3.fromRGB(205, 211, 224), 90)
+	Gradient(Knob, Color3.new(1, 1, 1), Color3.fromRGB(205, 205, 205), 90)
+	Stroke(Knob, Color3.fromRGB(14, 14, 14), 2)
 	local Hit = New("TextButton", {
 		Position = UDim2.fromOffset(18, 32),
 		Size = UDim2.new(1, -35, 0, 32),
@@ -1649,7 +1653,7 @@ function Container:AddViewport(Name, Info)
 	local Holder = New("Frame", {
 		Position = UDim2.fromOffset(14, 10),
 		Size = UDim2.new(1, -28, 0, Height),
-		BackgroundColor3 = Color3.fromRGB(19, 20, 27),
+		BackgroundColor3 = Color3.fromRGB(18, 18, 18),
 		Parent = Block,
 	})
 	Corner(Holder, 8)
@@ -2363,7 +2367,7 @@ local function NewModal(Title, Width, Height)
 
 	Modal.Overlay = New("TextButton", {
 		Size = UDim2.fromScale(1, 1),
-		BackgroundColor3 = Color3.fromRGB(8, 10, 16),
+		BackgroundColor3 = Color3.fromRGB(8, 8, 8),
 		BackgroundTransparency = 1,
 		Visible = false,
 		ZIndex = 100,
@@ -2375,7 +2379,7 @@ local function NewModal(Title, Width, Height)
 		AnchorPoint = Vector2.new(0.5, 0.5),
 		Position = UDim2.fromScale(0.5, 0.54),
 		Size = UDim2.fromOffset(Width, Height),
-		BackgroundColor3 = Color3.fromRGB(24, 27, 38),
+		BackgroundColor3 = Color3.fromRGB(22, 22, 22),
 		GroupTransparency = 1,
 		Active = true,
 		Parent = Modal.Overlay,
@@ -2801,7 +2805,7 @@ function WindowMeta:LoadConfigManger()
 		Parent = ConfigCard,
 	})
 	Corner(InputFrame, 7)
-	Gradient(InputFrame, Color3.fromRGB(31, 34, 45), Color3.fromRGB(26, 28, 38), 90)
+	Gradient(InputFrame, Color3.fromRGB(32, 32, 32), Color3.fromRGB(26, 26, 26), 90)
 	Stroke(InputFrame, Theme.Line, 1, 0.3)
 	local ConfigBox = New("TextBox", {
 		Position = UDim2.fromOffset(12, 0),
@@ -2824,7 +2828,7 @@ function WindowMeta:LoadConfigManger()
 		Parent = ConfigCard,
 	})
 	Corner(DropdownFrame, 7)
-	Gradient(DropdownFrame, Color3.fromRGB(31, 34, 45), Color3.fromRGB(26, 28, 38), 90)
+	Gradient(DropdownFrame, Color3.fromRGB(32, 32, 32), Color3.fromRGB(26, 26, 26), 90)
 	Stroke(DropdownFrame, Theme.Line, 1, 0.3)
 
 	local DropdownValue = New("TextLabel", {
@@ -2851,7 +2855,7 @@ function WindowMeta:LoadConfigManger()
 		Position = UDim2.new(0, 0, 1, 8),
 		Size = UDim2.new(1, 0, 0, 0),
 		AutomaticSize = Enum.AutomaticSize.Y,
-		BackgroundColor3 = Color3.fromRGB(19, 20, 27),
+		BackgroundColor3 = Color3.fromRGB(18, 18, 18),
 		Visible = false,
 		ZIndex = 50,
 		Parent = DropdownFrame,
@@ -3052,7 +3056,7 @@ function WindowMeta:LoadSerachManger()
 		Parent = Modal.Panel,
 	})
 	Corner(ModalSearch, 12)
-	Gradient(ModalSearch, Color3.fromRGB(27, 29, 40), Color3.fromRGB(22, 24, 33), 90)
+	Gradient(ModalSearch, Color3.fromRGB(28, 28, 28), Color3.fromRGB(22, 22, 22), 90)
 	local ModalStroke = Stroke(ModalSearch, Theme.Line, 1, 0.1)
 	local ModalIcon = MakeIcon(ModalSearch, { "search" }, 24, Theme.Muted)
 	ModalIcon.Position = UDim2.fromOffset(16, 15)
@@ -3263,7 +3267,7 @@ function WindowMeta:LoadSerachManger()
 			local Row = New("Frame", {
 				Position = UDim2.fromOffset(0, SlideFrom),
 				Size = UDim2.fromScale(1, 1),
-				BackgroundColor3 = Color3.fromRGB(32, 35, 47),
+				BackgroundColor3 = Color3.fromRGB(32, 32, 32),
 				BackgroundTransparency = 1,
 				Parent = Slot,
 			})
@@ -3310,14 +3314,14 @@ function WindowMeta:LoadSerachManger()
 				Parent = Row,
 			})
 			Hit.MouseEnter.Connect(Hit.MouseEnter, function()
-				Tween(Row, { BackgroundColor3 = Color3.fromRGB(42, 46, 62) }, 0.2)
+				Tween(Row, { BackgroundColor3 = Color3.fromRGB(44, 44, 44) }, 0.2)
 				Tween(RowStroke, { Color = Theme.Accent, Transparency = 0.45 }, 0.2)
 				Tween(Bar, { Size = UDim2.fromOffset(4, 40) }, 0.3, Enum.EasingStyle.Back)
 				Tween(TitleLabel, { Position = UDim2.fromOffset(34, 8) }, 0.25, Enum.EasingStyle.Quint)
 				Tween(SubLabel, { Position = UDim2.fromOffset(34, 34) }, 0.25, Enum.EasingStyle.Quint)
 			end)
 			Hit.MouseLeave.Connect(Hit.MouseLeave, function()
-				Tween(Row, { BackgroundColor3 = Color3.fromRGB(32, 35, 47) }, 0.2)
+				Tween(Row, { BackgroundColor3 = Color3.fromRGB(32, 32, 32) }, 0.2)
 				Tween(RowStroke, { Color = Theme.Line, Transparency = 0.6 }, 0.2)
 				Tween(Bar, { Size = UDim2.fromOffset(4, 32) }, 0.2)
 				Tween(TitleLabel, { Position = UDim2.fromOffset(28, 8) }, 0.25, Enum.EasingStyle.Quint)
