@@ -2460,7 +2460,7 @@ local function NewModal(Title, Width, Height)
 end
 
 local function NewSideButton(Icons)
-	local SlotWidth, SlotGap = 46, 22
+	local SlotWidth, SlotGap = 46, 36
 	local SlotPitch = SlotWidth + SlotGap
 	if SideSlots > 0 then
 		local Separator = New("Frame", {
