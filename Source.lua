@@ -953,11 +953,14 @@ function Container:AddSlider(Name, Info)
 	})
 	Corner(ValueBox, 6)
 	Gradient(ValueBox, Theme.ElementTop, Theme.ElementBottom, 90)
-	local ValueText = New("TextLabel", {
+	local ValueStroke = Stroke(ValueBox, Theme.Accent, 1, 1)
+	local ValueText = New("TextBox", {
 		Size = UDim2.fromScale(1, 1),
+		BackgroundTransparency = 1,
 		Font = Enum.Font.GothamMedium,
 		TextSize = 14,
 		TextColor3 = Theme.Sub,
+		ClearTextOnFocus = false,
 		Parent = ValueBox,
 	})
 	local Track = New("Frame", {
@@ -1009,6 +1012,21 @@ function Container:AddSlider(Name, Info)
 	end
 
 	ControlBinds[Key] = SetValue
+
+	ValueText.Focused.Connect(ValueText.Focused, function()
+		Tween(ValueStroke, { Transparency = 0 }, 0.2)
+		Tween(ValueText, { TextColor3 = Theme.Text }, 0.2)
+	end)
+	ValueText.FocusLost.Connect(ValueText.FocusLost, function()
+		Tween(ValueStroke, { Transparency = 1 }, 0.2)
+		Tween(ValueText, { TextColor3 = Theme.Sub }, 0.2)
+		local Typed = tonumber(ValueText.Text)
+		if Typed then
+			SetValue(Typed)
+		else
+			SetValue(Flags[Key], true)
+		end
+	end)
 
 	local Dragging = false
 	local Scroller = Card.FindFirstAncestorOfClass(Card, "ScrollingFrame")
