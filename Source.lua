@@ -19,8 +19,9 @@ local WindowConfig = {}
 
 local GuiName = "BlockUiLibrary"
 local WatermarkKey = "Settings/Watermark"
-local BaseWidth, BaseHeight = 960, 730
-local SidebarWidth = 248
+local BaseWidth, BaseHeight = 700, 470
+local SidebarWidth = 172
+local ColumnWidth = math.floor((BaseWidth - SidebarWidth - 7 - 40) / 2)
 local OverlayTransparency = 0.4
 
 local Gui, Main, Scale, Content, Sidebar, Items, ColorCatcher
@@ -84,18 +85,18 @@ local function IsAsset(Icon)
 end
 
 local Theme = {
-	WindowTop = Color3.fromRGB(40, 40, 41),
-	WindowBottom = Color3.fromRGB(40, 40, 41),
-	SidebarBg = Color3.fromRGB(32, 30, 31),
-	CardTop = Color3.fromRGB(46, 47, 49),
-	CardBottom = Color3.fromRGB(46, 47, 49),
+	WindowTop = Color3.fromRGB(33, 33, 35),
+	WindowBottom = Color3.fromRGB(33, 33, 35),
+	SidebarBg = Color3.fromRGB(27, 27, 29),
+	CardTop = Color3.fromRGB(39, 39, 42),
+	CardBottom = Color3.fromRGB(39, 39, 42),
 	ElementTop = Color3.fromRGB(41, 42, 44),
 	ElementBottom = Color3.fromRGB(39, 41, 42),
-	Field = Color3.fromRGB(37, 39, 38),
-	Line = Color3.fromRGB(58, 59, 64),
+	Field = Color3.fromRGB(32, 32, 35),
+	Line = Color3.fromRGB(50, 50, 54),
 	LineLight = Color3.fromRGB(66, 67, 72),
-	SelectedTop = Color3.fromRGB(46, 47, 49),
-	SelectedBottom = Color3.fromRGB(46, 47, 49),
+	SelectedTop = Color3.fromRGB(45, 45, 49),
+	SelectedBottom = Color3.fromRGB(45, 45, 49),
 	Accent = Color3.fromRGB(74, 117, 170),
 	AccentLight = Color3.fromRGB(86, 129, 183),
 	AccentDark = Color3.fromRGB(66, 105, 157),
@@ -523,21 +524,21 @@ local function NewSection(Column, Title, Icon, Order)
 		Parent = Column,
 	})
 	Holder.SetAttribute(Holder, "SectionHolder", true)
-	New("UIListLayout", { Padding = UDim.new(0, 8), SortOrder = Enum.SortOrder.LayoutOrder, Parent = Holder })
+	New("UIListLayout", { Padding = UDim.new(0, 5), SortOrder = Enum.SortOrder.LayoutOrder, Parent = Holder })
 	local Head = New("Frame", {
-		Size = UDim2.new(1, 0, 0, 28),
+		Size = UDim2.new(1, 0, 0, 20),
 		BackgroundTransparency = 1,
 		LayoutOrder = 1,
 		Parent = Holder,
 	})
-	local HeadIcon = MakeIcon(Head, Icon, 20, Theme.Muted)
-	HeadIcon.Position = UDim2.fromOffset(4, 4)
+	local HeadIcon = MakeIcon(Head, Icon, 14, Theme.Muted)
+	HeadIcon.Position = UDim2.fromOffset(4, 3)
 	New("TextLabel", {
-		Position = UDim2.fromOffset(34, 0),
-		Size = UDim2.new(1, -34, 1, 0),
+		Position = UDim2.fromOffset(24, 0),
+		Size = UDim2.new(1, -24, 1, 0),
 		Text = Title,
 		Font = Enum.Font.GothamMedium,
-		TextSize = 16,
+		TextSize = 13,
 		TextColor3 = Theme.Muted,
 		TextXAlignment = Enum.TextXAlignment.Left,
 		Parent = Head,
@@ -545,16 +546,14 @@ local function NewSection(Column, Title, Icon, Order)
 	local Card = New("Frame", {
 		Size = UDim2.new(1, 0, 0, 0),
 		AutomaticSize = Enum.AutomaticSize.Y,
-		BackgroundColor3 = Color3.new(1, 1, 1),
+		BackgroundColor3 = Theme.CardTop,
 		LayoutOrder = 2,
 		Parent = Holder,
 	})
-	Corner(Card, 8)
-	Gradient(Card, Theme.CardTop, Theme.CardBottom, 90)
-	local CardStroke = Stroke(Card, Color3.new(1, 1, 1), 1, 0)
-	Gradient(CardStroke, Color3.fromRGB(53, 54, 56), Color3.fromRGB(53, 54, 56), 90, 0, 0)
+	Corner(Card, 6)
+	Stroke(Card, Theme.Line, 1, 0.35)
 	New("UIListLayout", { SortOrder = Enum.SortOrder.LayoutOrder, Parent = Card })
-	New("UIPadding", { PaddingTop = UDim.new(0, 8), PaddingBottom = UDim.new(0, 8), Parent = Card })
+	New("UIPadding", { PaddingTop = UDim.new(0, 5), PaddingBottom = UDim.new(0, 5), Parent = Card })
 	return Card, Holder
 end
 
@@ -638,22 +637,22 @@ local function NewField(Card, Name)
 	New("UIPadding", {
 		PaddingTop = UDim.new(0, 3),
 		PaddingBottom = UDim.new(0, 5),
-		PaddingLeft = UDim.new(0, 18),
-		PaddingRight = UDim.new(0, 17),
+		PaddingLeft = UDim.new(0, 12),
+		PaddingRight = UDim.new(0, 12),
 		Parent = Block,
 	})
 	New("TextLabel", {
-		Size = UDim2.new(1, 0, 0, 24),
+		Size = UDim2.new(1, 0, 0, 20),
 		Text = Name,
 		Font = Enum.Font.GothamBold,
-		TextSize = 17,
+		TextSize = 14,
 		TextColor3 = Theme.Text,
 		TextXAlignment = Enum.TextXAlignment.Left,
 		LayoutOrder = 1,
 		Parent = Block,
 	})
 	local BoxFrame = New("Frame", {
-		Size = UDim2.new(1, 0, 0, 36),
+		Size = UDim2.new(1, 0, 0, 28),
 		BackgroundColor3 = Color3.new(1, 1, 1),
 		LayoutOrder = 2,
 		Parent = Block,
@@ -670,7 +669,7 @@ local function NewDropdownShell(Card, Name)
 		Position = UDim2.fromOffset(12, 0),
 		Size = UDim2.new(1, -44, 1, 0),
 		Font = Enum.Font.GothamMedium,
-		TextSize = 17,
+		TextSize = 14,
 		TextColor3 = Theme.Sub,
 		TextXAlignment = Enum.TextXAlignment.Left,
 		TextTruncate = Enum.TextTruncate.AtEnd,
@@ -802,19 +801,18 @@ end
 function Container:AddSeparator()
 	local Card = CardOf(self)
 	local Wrap = New("Frame", {
-		Size = UDim2.new(1, 0, 0, 16),
+		Size = UDim2.new(1, 0, 0, 9),
 		BackgroundTransparency = 1,
 		LayoutOrder = NextOrder(Card),
 		Parent = Card,
 	})
-	local Pill = New("Frame", {
-		Position = UDim2.fromOffset(18, 3),
-		Size = UDim2.new(1, -35, 0, 10),
-		BackgroundColor3 = Theme.Field,
+	New("Frame", {
+		Position = UDim2.fromOffset(12, 4),
+		Size = UDim2.new(1, -24, 0, 1),
+		BackgroundColor3 = Theme.Line,
+		BackgroundTransparency = 0.3,
 		Parent = Wrap,
 	})
-	Corner(Pill, 5)
-	Stroke(Pill, Theme.Line, 1, 0.55)
 	return Wrap
 end
 
@@ -824,17 +822,17 @@ function Container:AddToggle(Name, Info)
 	local Key = KeyOf(self, Name, Info)
 	local Own = {}
 	local Row = New("TextButton", {
-		Size = UDim2.new(1, 0, 0, 36),
+		Size = UDim2.new(1, 0, 0, 28),
 		BackgroundTransparency = 1,
 		LayoutOrder = NextOrder(Card),
 		Parent = Card,
 	})
 	local Label = New("TextLabel", {
-		Position = UDim2.fromOffset(18, 0),
+		Position = UDim2.fromOffset(12, 0),
 		Size = UDim2.new(1, -120, 1, 0),
 		Text = Name,
 		Font = Enum.Font.GothamMedium,
-		TextSize = 17,
+		TextSize = 14,
 		TextColor3 = Theme.Muted,
 		TextXAlignment = Enum.TextXAlignment.Left,
 		TextTruncate = Enum.TextTruncate.AtEnd,
@@ -842,12 +840,12 @@ function Container:AddToggle(Name, Info)
 	})
 	local Switch = New("Frame", {
 		AnchorPoint = Vector2.new(1, 0.5),
-		Position = UDim2.new(1, -17, 0.5, 0),
-		Size = UDim2.fromOffset(44, 22),
+		Position = UDim2.new(1, -12, 0.5, 0),
+		Size = UDim2.fromOffset(34, 18),
 		BackgroundColor3 = Color3.new(1, 1, 1),
 		Parent = Row,
 	})
-	Corner(Switch, 11)
+	Corner(Switch, 9)
 	Gradient(Switch, Theme.Field, Theme.Field, 90)
 	local OnLayer = New("Frame", {
 		Size = UDim2.fromScale(1, 1),
@@ -855,7 +853,7 @@ function Container:AddToggle(Name, Info)
 		BackgroundTransparency = 1,
 		Parent = Switch,
 	})
-	Corner(OnLayer, 11)
+	Corner(OnLayer, 9)
 	local OnGrad = Gradient(OnLayer, Theme.AccentDark, Theme.AccentLight, 0)
 	RegisterAccentGradient(OnGrad, 2)
 
@@ -992,7 +990,7 @@ function Container:AddSlider(Name, Info)
 		Size = UDim2.new(0.6, 0, 0, 24),
 		Text = Name,
 		Font = Enum.Font.GothamBold,
-		TextSize = 17,
+		TextSize = 14,
 		TextColor3 = Theme.Text,
 		TextXAlignment = Enum.TextXAlignment.Left,
 		Parent = Block,
@@ -1166,13 +1164,13 @@ function Container:AddDropdown(Name, Info)
 			BackgroundTransparency = 1,
 			Text = tostring(Option),
 			Font = Enum.Font.GothamMedium,
-			TextSize = 17,
+			TextSize = 14,
 			TextColor3 = Theme.Muted,
 			TextXAlignment = Enum.TextXAlignment.Left,
 			LayoutOrder = OptIndex,
 			Parent = Scroll,
 		})
-		New("UIPadding", { PaddingLeft = UDim.new(0, 18), Parent = Button })
+		New("UIPadding", { PaddingLeft = UDim.new(0, 12), Parent = Button })
 		Button.BackgroundColor3 = Color3.fromRGB(46, 48, 52)
 		Corner(Button, 6)
 		local Mark = New("Frame", {
@@ -1332,7 +1330,7 @@ function Container:AddMultiDropdown(Name, Info)
 			Size = UDim2.new(1, -44, 1, 0),
 			Text = tostring(Option),
 			Font = Enum.Font.GothamMedium,
-			TextSize = 17,
+			TextSize = 14,
 			TextColor3 = Theme.Muted,
 			TextXAlignment = Enum.TextXAlignment.Left,
 			TextTruncate = Enum.TextTruncate.AtEnd,
@@ -1477,14 +1475,14 @@ function Container:AddSearchDropdown(Name, Info)
 			BackgroundTransparency = 1,
 			Text = tostring(Option),
 			Font = Enum.Font.GothamMedium,
-			TextSize = 17,
+			TextSize = 14,
 			TextColor3 = Theme.Muted,
 			TextXAlignment = Enum.TextXAlignment.Left,
 			TextTruncate = Enum.TextTruncate.AtEnd,
 			LayoutOrder = OptIndex,
 			Parent = Scroll,
 		})
-		New("UIPadding", { PaddingLeft = UDim.new(0, 18), Parent = Button })
+		New("UIPadding", { PaddingLeft = UDim.new(0, 12), Parent = Button })
 		Button.BackgroundColor3 = Color3.fromRGB(46, 48, 52)
 		Corner(Button, 6)
 		local Mark = New("Frame", {
@@ -1559,8 +1557,8 @@ function Container:AddLabel(Text, Info)
 	New("UIPadding", {
 		PaddingTop = UDim.new(0, 8),
 		PaddingBottom = UDim.new(0, 8),
-		PaddingLeft = UDim.new(0, 18),
-		PaddingRight = UDim.new(0, 17),
+		PaddingLeft = UDim.new(0, 12),
+		PaddingRight = UDim.new(0, 12),
 		Parent = Row,
 	})
 	local Label = New("TextLabel", {
@@ -1568,7 +1566,7 @@ function Container:AddLabel(Text, Info)
 		AutomaticSize = Enum.AutomaticSize.Y,
 		Text = tostring(Text),
 		Font = Enum.Font.GothamMedium,
-		TextSize = 16,
+		TextSize = 13,
 		TextColor3 = Theme.Sub,
 		TextWrapped = true,
 		TextXAlignment = Enum.TextXAlignment.Left,
@@ -1597,7 +1595,7 @@ function Container:AddInput(Name, Info)
 		Size = UDim2.new(1, -24, 1, 0),
 		BackgroundTransparency = 1,
 		Font = Enum.Font.GothamMedium,
-		TextSize = 17,
+		TextSize = 14,
 		TextColor3 = Theme.Text,
 		PlaceholderText = Info.Placeholder or "",
 		PlaceholderColor3 = Theme.Muted,
@@ -1636,17 +1634,17 @@ function Container:AddColorPicker(Name, Info)
 	local Card = CardOf(self)
 	local Key = KeyOf(self, Name, Info)
 	local Row = New("Frame", {
-		Size = UDim2.new(1, 0, 0, 36),
+		Size = UDim2.new(1, 0, 0, 28),
 		BackgroundTransparency = 1,
 		LayoutOrder = NextOrder(Card),
 		Parent = Card,
 	})
 	New("TextLabel", {
-		Position = UDim2.fromOffset(18, 0),
+		Position = UDim2.fromOffset(12, 0),
 		Size = UDim2.new(1, -80, 1, 0),
 		Text = Name,
 		Font = Enum.Font.GothamBold,
-		TextSize = 17,
+		TextSize = 14,
 		TextColor3 = Theme.Text,
 		TextXAlignment = Enum.TextXAlignment.Left,
 		Parent = Row,
@@ -1680,7 +1678,7 @@ function Container:AddButton(Name, Info)
 		BackgroundTransparency = 1,
 		Text = Name,
 		Font = Enum.Font.GothamMedium,
-		TextSize = 17,
+		TextSize = 14,
 		TextColor3 = Theme.Text,
 		Parent = Frame,
 	})
@@ -1755,7 +1753,7 @@ function Container:AddViewport(Name, Info)
 		Size = UDim2.fromScale(1, 1),
 		Text = "Loading...",
 		Font = Enum.Font.GothamMedium,
-		TextSize = 16,
+		TextSize = 13,
 		TextColor3 = Theme.Muted,
 		Parent = Holder,
 	})
@@ -2082,7 +2080,7 @@ local function BuildNotify()
 			Size = UDim2.new(1, -80, 0, 22),
 			Text = Title,
 			Font = Enum.Font.GothamBold,
-			TextSize = 17,
+			TextSize = 14,
 			TextColor3 = Theme.Text,
 			TextXAlignment = Enum.TextXAlignment.Left,
 			TextTruncate = Enum.TextTruncate.AtEnd,
@@ -2549,19 +2547,19 @@ end
 local function NewSideButton(Icons, Wide)
 	if Wide then
 		local Button = New("TextButton", {
-			Position = UDim2.fromOffset(12, BaseHeight - 54),
-			Size = UDim2.fromOffset(SidebarWidth - 24, 38),
+			Position = UDim2.fromOffset(10, BaseHeight - 42),
+			Size = UDim2.fromOffset(SidebarWidth - 20, 32),
 			BackgroundColor3 = Color3.fromRGB(46, 48, 52),
 			Parent = Sidebar,
 		})
 		Corner(Button, 6)
 		local ButtonStroke = Stroke(Button, Theme.LineLight, 1, 0.7)
-		local ButtonIcon = MakeIcon(Button, Icons, 18, Theme.Muted)
+		local ButtonIcon = MakeIcon(Button, Icons, 15, Theme.Muted)
 		ButtonIcon.AnchorPoint = Vector2.new(0, 0.5)
-		ButtonIcon.Position = UDim2.new(0, 12, 0.5, 0)
+		ButtonIcon.Position = UDim2.new(0, 10, 0.5, 0)
 		local ButtonText = New("TextLabel", {
-			Position = UDim2.fromOffset(40, 0),
-			Size = UDim2.new(1, -48, 1, 0),
+			Position = UDim2.fromOffset(32, 0),
+			Size = UDim2.new(1, -40, 1, 0),
 			Text = "Search...",
 			Font = Enum.Font.GothamMedium,
 			TextSize = 15,
@@ -2582,9 +2580,9 @@ local function NewSideButton(Icons, Wide)
 		return Button
 	end
 
-	local Size, Gap = 32, 6
+	local Size, Gap = 26, 5
 	local Button = New("TextButton", {
-		Position = UDim2.fromOffset(12 + (Size + Gap) * SideSlots, BaseHeight - 54 - 8 - Size),
+		Position = UDim2.fromOffset(10 + (Size + Gap) * SideSlots, BaseHeight - 42 - 6 - Size),
 		Size = UDim2.fromOffset(Size, Size),
 		BackgroundColor3 = Color3.fromRGB(46, 48, 52),
 		Parent = Sidebar,
@@ -2592,7 +2590,7 @@ local function NewSideButton(Icons, Wide)
 	SideSlots += 1
 	Corner(Button, 6)
 	local ButtonStroke = Stroke(Button, Theme.Line, 1, 1)
-	local ButtonIcon = MakeIcon(Button, Icons, 16, Theme.Muted)
+	local ButtonIcon = MakeIcon(Button, Icons, 14, Theme.Muted)
 	ButtonIcon.AnchorPoint = Vector2.new(0.5, 0.5)
 	ButtonIcon.Position = UDim2.fromScale(0.5, 0.5)
 
@@ -2613,7 +2611,7 @@ local function SelectTab(Name)
 	if OpenDropdown then OpenDropdown() end
 	CloseColor()
 	local PageBase = UDim2.fromOffset(SidebarWidth + 1, 0)
-	local PageStart = UDim2.fromOffset(SidebarWidth + 1, 18)
+	local PageStart = UDim2.fromOffset(SidebarWidth + 1, 12)
 	for _, Tab in ipairs(Tabs) do
 		local On = Tab.Name == Name
 		if On then
@@ -2628,7 +2626,7 @@ local function SelectTab(Name)
 			Tab.Page.Visible = false
 		end
 		Tween(Tab.Button, { BackgroundTransparency = On and 0 or 1 })
-		Tween(Tab.Stroke, { Transparency = On and 0.6 or 1 })
+		Tween(Tab.Stroke, { Transparency = On and 0.75 or 1 })
 		Tab.Text.Font = On and Enum.Font.GothamBold or Enum.Font.GothamMedium
 		Tween(Tab.Text, { TextColor3 = On and Color3.new(1, 1, 1) or Theme.Sub })
 		Tween(Tab.Icon, { ImageColor3 = On and Color3.new(1, 1, 1) or Theme.Sub })
@@ -2668,10 +2666,10 @@ function WindowMeta:AddTab(Name, Icon, Category)
 		local First = LastCategory == nil
 		LastCategory = Category
 		local CategoryLabel = New("TextLabel", {
-			Size = UDim2.new(1, 0, 0, First and 24 or 38),
+			Size = UDim2.new(1, 0, 0, First and 18 or 28),
 			Text = Category,
 			Font = Enum.Font.GothamMedium,
-			TextSize = 12,
+			TextSize = 11,
 			TextColor3 = Theme.Muted,
 			TextXAlignment = Enum.TextXAlignment.Left,
 			TextYAlignment = Enum.TextYAlignment.Bottom,
@@ -2683,7 +2681,7 @@ function WindowMeta:AddTab(Name, Icon, Category)
 	TabOrder += 1
 
 	local Button = New("TextButton", {
-		Size = UDim2.new(1, 0, 0, 42),
+		Size = UDim2.new(1, 0, 0, 32),
 		BackgroundColor3 = Theme.SelectedTop,
 		BackgroundTransparency = 1,
 		LayoutOrder = TabOrder,
@@ -2691,14 +2689,14 @@ function WindowMeta:AddTab(Name, Icon, Category)
 	})
 	Corner(Button, 6)
 	local ButtonStroke = Stroke(Button, Theme.LineLight, 1, 1)
-	local TabIcon = MakeIcon(Button, Icon or "layers", 20, Theme.Sub)
-	TabIcon.Position = UDim2.fromOffset(12, 11)
+	local TabIcon = MakeIcon(Button, Icon or "layers", 16, Theme.Sub)
+	TabIcon.Position = UDim2.fromOffset(10, 8)
 	local TabText = New("TextLabel", {
-		Position = UDim2.fromOffset(42, 0),
-		Size = UDim2.new(1, -42, 1, 0),
+		Position = UDim2.fromOffset(34, 0),
+		Size = UDim2.new(1, -34, 1, 0),
 		Text = Name,
 		Font = Enum.Font.GothamMedium,
-		TextSize = 16,
+		TextSize = 13,
 		TextColor3 = Theme.Sub,
 		TextXAlignment = Enum.TextXAlignment.Left,
 		TextTruncate = Enum.TextTruncate.AtEnd,
@@ -2722,17 +2720,17 @@ function WindowMeta:AddTab(Name, Icon, Category)
 		ElasticBehavior = Enum.ElasticBehavior.Never,
 		Parent = Page,
 	})
-	New("UIPadding", { PaddingTop = UDim.new(0, 16), PaddingBottom = UDim.new(0, 70), Parent = Scroller })
+	New("UIPadding", { PaddingTop = UDim.new(0, 12), PaddingBottom = UDim.new(0, 50), Parent = Scroller })
 
 	local function NewColumn(X)
 		local Column = New("Frame", {
 			Position = UDim2.fromOffset(X, 0),
-			Size = UDim2.fromOffset(335, 0),
+			Size = UDim2.fromOffset(ColumnWidth, 0),
 			AutomaticSize = Enum.AutomaticSize.Y,
 			BackgroundTransparency = 1,
 			Parent = Scroller,
 		})
-		New("UIListLayout", { Padding = UDim.new(0, 22), SortOrder = Enum.SortOrder.LayoutOrder, Parent = Column })
+		New("UIListLayout", { Padding = UDim.new(0, 12), SortOrder = Enum.SortOrder.LayoutOrder, Parent = Column })
 		return Column
 	end
 
@@ -2759,8 +2757,8 @@ function WindowMeta:AddTab(Name, Icon, Category)
 	local Tab = setmetatable({
 		Name = Name,
 		Counts = { Left = 0, Right = 0 },
-		LeftColumn = NewColumn(16),
-		RightColumn = NewColumn(364),
+		LeftColumn = NewColumn(14),
+		RightColumn = NewColumn(14 + ColumnWidth + 12),
 	}, TabMeta)
 
 	if not Current then SelectTab(Name) end
@@ -2912,7 +2910,7 @@ function WindowMeta:LoadConfigManger()
 		Size = UDim2.new(1, -24, 1, 0),
 		BackgroundTransparency = 1,
 		Font = Enum.Font.GothamMedium,
-		TextSize = 16,
+		TextSize = 13,
 		TextColor3 = Theme.Text,
 		PlaceholderText = "Config Name...",
 		PlaceholderColor3 = Theme.Muted,
@@ -2936,7 +2934,7 @@ function WindowMeta:LoadConfigManger()
 		Size = UDim2.new(1, -44, 1, 0),
 		Text = "Select Config",
 		Font = Enum.Font.GothamMedium,
-		TextSize = 16,
+		TextSize = 13,
 		TextColor3 = Theme.Sub,
 		TextXAlignment = Enum.TextXAlignment.Left,
 		Parent = DropdownFrame,
@@ -3401,7 +3399,7 @@ function WindowMeta:LoadSerachManger()
 				Size = UDim2.new(1, -44, 0, 20),
 				Text = SubText,
 				Font = Enum.Font.GothamMedium,
-				TextSize = 16,
+				TextSize = 13,
 				TextColor3 = Theme.Muted,
 				TextTransparency = 1,
 				TextXAlignment = Enum.TextXAlignment.Left,
@@ -3565,7 +3563,7 @@ function Library:CreateWindow(Config)
 		local View = Gui.AbsoluteSize
 		if View.X <= 0 or View.Y <= 0 then return end
 		local UserMult = Flags["Settings/UIScale"] or 1
-		Scale.Scale = math.clamp(math.min(View.X * 0.95 / BaseWidth, View.Y * 0.95 / BaseHeight) * UserMult, 0.1, 2)
+		Scale.Scale = math.clamp(math.min(View.X * 0.8 / BaseWidth, View.Y * 0.8 / BaseHeight) * UserMult, 0.1, 2)
 	end
 	UpdateScale()
 	Gui.GetPropertyChangedSignal(Gui, "AbsoluteSize").Connect(Gui.GetPropertyChangedSignal(Gui, "AbsoluteSize"), UpdateScale)
@@ -3615,20 +3613,20 @@ function Library:CreateWindow(Config)
 	})
 
 	local Logo = New("Frame", {
-		Position = UDim2.fromOffset(22, 18),
-		Size = UDim2.fromOffset(206, 44),
+		Position = UDim2.fromOffset(14, 12),
+		Size = UDim2.fromOffset(SidebarWidth - 28, 32),
 		BackgroundTransparency = 1,
 		Parent = Sidebar,
 	})
-	local LogoIcon = MakeAccentIcon(Logo, WindowConfig.Logo, 28)
-	LogoIcon.Position = UDim2.fromOffset(0, 8)
+	local LogoIcon = MakeAccentIcon(Logo, WindowConfig.Logo, 22)
+	LogoIcon.Position = UDim2.fromOffset(0, 5)
 
 	New("TextLabel", {
-		Position = UDim2.fromOffset(42, 0),
-		Size = UDim2.new(1, -42, 1, 0),
+		Position = UDim2.fromOffset(30, 0),
+		Size = UDim2.new(1, -30, 1, 0),
 		Text = WindowConfig.Title,
 		Font = Enum.Font.GothamMedium,
-		TextSize = 24,
+		TextSize = 18,
 		TextColor3 = Theme.Text,
 		TextXAlignment = Enum.TextXAlignment.Left,
 		TextTruncate = Enum.TextTruncate.AtEnd,
@@ -3636,14 +3634,14 @@ function Library:CreateWindow(Config)
 	})
 
 	local DragHandle = New("TextButton", {
-		Size = UDim2.fromOffset(SidebarWidth, 76),
+		Size = UDim2.fromOffset(SidebarWidth, 52),
 		BackgroundTransparency = 1,
 		Parent = Sidebar,
 	})
 
 	local ItemsMask = New("Frame", {
-		Position = UDim2.fromOffset(0, 74),
-		Size = UDim2.fromOffset(SidebarWidth, 540),
+		Position = UDim2.fromOffset(0, 52),
+		Size = UDim2.fromOffset(SidebarWidth, BaseHeight - 52 - 84),
 		BackgroundTransparency = 1,
 		ClipsDescendants = true,
 		Parent = Sidebar,
@@ -3659,11 +3657,11 @@ function Library:CreateWindow(Config)
 		ElasticBehavior = Enum.ElasticBehavior.Never,
 		Parent = ItemsMask,
 	})
-	New("UIListLayout", { Padding = UDim.new(0, 4), SortOrder = Enum.SortOrder.LayoutOrder, Parent = Items })
+	New("UIListLayout", { Padding = UDim.new(0, 2), SortOrder = Enum.SortOrder.LayoutOrder, Parent = Items })
 	New("UIPadding", {
-		PaddingLeft = UDim.new(0, 12),
-		PaddingRight = UDim.new(0, 12),
-		PaddingBottom = UDim.new(0, 10),
+		PaddingLeft = UDim.new(0, 10),
+		PaddingRight = UDim.new(0, 10),
+		PaddingBottom = UDim.new(0, 8),
 		PaddingTop = UDim.new(0, 2),
 		Parent = Items,
 	})
