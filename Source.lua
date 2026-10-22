@@ -85,14 +85,14 @@ local function IsAsset(Icon)
 end
 
 local Theme = {
-	WindowTop = Color3.fromRGB(30, 31, 34),
-	WindowBottom = Color3.fromRGB(30, 31, 34),
-	SidebarBg = Color3.fromRGB(25, 25, 28),
-	CardTop = Color3.fromRGB(39, 40, 44),
-	CardBottom = Color3.fromRGB(39, 40, 44),
+	WindowTop = Color3.fromRGB(32, 33, 36),
+	WindowBottom = Color3.fromRGB(32, 33, 36),
+	SidebarBg = Color3.fromRGB(27, 27, 30),
+	CardTop = Color3.fromRGB(37, 38, 42),
+	CardBottom = Color3.fromRGB(37, 38, 42),
 	ElementTop = Color3.fromRGB(40, 40, 44),
 	ElementBottom = Color3.fromRGB(40, 40, 44),
-	Field = Color3.fromRGB(31, 31, 34),
+	Field = Color3.fromRGB(29, 30, 33),
 	Line = Color3.fromRGB(46, 46, 51),
 	LineLight = Color3.fromRGB(56, 56, 62),
 	SelectedTop = Color3.fromRGB(42, 42, 47),
