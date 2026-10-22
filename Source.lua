@@ -84,17 +84,17 @@ local function IsAsset(Icon)
 end
 
 local Theme = {
-	WindowTop = Color3.fromRGB(30, 30, 32),
-	WindowBottom = Color3.fromRGB(27, 27, 29),
-	SidebarBg = Color3.fromRGB(23, 23, 25),
-	CardTop = Color3.fromRGB(35, 35, 38),
-	CardBottom = Color3.fromRGB(33, 33, 36),
+	WindowTop = Color3.fromRGB(31, 31, 33),
+	WindowBottom = Color3.fromRGB(31, 31, 33),
+	SidebarBg = Color3.fromRGB(27, 27, 29),
+	CardTop = Color3.fromRGB(37, 37, 40),
+	CardBottom = Color3.fromRGB(37, 37, 40),
 	ElementTop = Color3.fromRGB(40, 40, 43),
 	ElementBottom = Color3.fromRGB(37, 37, 40),
-	Line = Color3.fromRGB(45, 45, 49),
-	LineLight = Color3.fromRGB(58, 58, 63),
-	SelectedTop = Color3.fromRGB(44, 44, 48),
-	SelectedBottom = Color3.fromRGB(44, 44, 48),
+	Line = Color3.fromRGB(48, 48, 52),
+	LineLight = Color3.fromRGB(54, 54, 59),
+	SelectedTop = Color3.fromRGB(43, 43, 47),
+	SelectedBottom = Color3.fromRGB(43, 43, 47),
 	Accent = Color3.fromRGB(77, 130, 230),
 	AccentLight = Color3.fromRGB(110, 160, 246),
 	AccentDark = Color3.fromRGB(56, 104, 202),
@@ -502,21 +502,21 @@ local function NewSection(Column, Title, Icon, Order)
 		Parent = Column,
 	})
 	Holder.SetAttribute(Holder, "SectionHolder", true)
-	New("UIListLayout", { Padding = UDim.new(0, 12), SortOrder = Enum.SortOrder.LayoutOrder, Parent = Holder })
+	New("UIListLayout", { Padding = UDim.new(0, 8), SortOrder = Enum.SortOrder.LayoutOrder, Parent = Holder })
 	local Head = New("Frame", {
-		Size = UDim2.new(1, 0, 0, 30),
+		Size = UDim2.new(1, 0, 0, 28),
 		BackgroundTransparency = 1,
 		LayoutOrder = 1,
 		Parent = Holder,
 	})
-	local HeadIcon = MakeIcon(Head, Icon, 24, Theme.Muted)
-	HeadIcon.Position = UDim2.fromOffset(1, 3)
+	local HeadIcon = MakeIcon(Head, Icon, 20, Theme.Muted)
+	HeadIcon.Position = UDim2.fromOffset(4, 4)
 	New("TextLabel", {
-		Position = UDim2.fromOffset(38, 0),
-		Size = UDim2.new(1, -38, 1, 0),
+		Position = UDim2.fromOffset(34, 0),
+		Size = UDim2.new(1, -34, 1, 0),
 		Text = Title,
 		Font = Enum.Font.GothamMedium,
-		TextSize = 18,
+		TextSize = 16,
 		TextColor3 = Theme.Muted,
 		TextXAlignment = Enum.TextXAlignment.Left,
 		Parent = Head,
@@ -528,10 +528,10 @@ local function NewSection(Column, Title, Icon, Order)
 		LayoutOrder = 2,
 		Parent = Holder,
 	})
-	Corner(Card, 10)
+	Corner(Card, 8)
 	Gradient(Card, Theme.CardTop, Theme.CardBottom, 90)
 	local CardStroke = Stroke(Card, Color3.new(1, 1, 1), 1, 0)
-	Gradient(CardStroke, Theme.LineLight, Theme.Line, 90, 0.4, 0.8)
+	Gradient(CardStroke, Theme.Line, Theme.Line, 90, 0.1, 0.1)
 	New("UIListLayout", { SortOrder = Enum.SortOrder.LayoutOrder, Parent = Card })
 	New("UIPadding", { PaddingTop = UDim.new(0, 9), PaddingBottom = UDim.new(0, 9), Parent = Card })
 	return Card, Holder
@@ -638,7 +638,7 @@ local function NewField(Card, Name)
 		Parent = Block,
 	})
 	Corner(BoxFrame, 7)
-	Gradient(BoxFrame, Color3.fromRGB(34, 34, 37), Color3.fromRGB(32, 32, 35), 90)
+	Gradient(BoxFrame, Color3.fromRGB(29, 29, 31), Color3.fromRGB(28, 28, 30), 90)
 	local BoxStroke = Stroke(BoxFrame, Theme.Line, 1, 0.3)
 	return Block, BoxFrame, BoxStroke
 end
@@ -2823,7 +2823,7 @@ function WindowMeta:LoadConfigManger()
 		Parent = ConfigCard,
 	})
 	Corner(InputFrame, 7)
-	Gradient(InputFrame, Color3.fromRGB(34, 34, 37), Color3.fromRGB(32, 32, 35), 90)
+	Gradient(InputFrame, Color3.fromRGB(29, 29, 31), Color3.fromRGB(28, 28, 30), 90)
 	Stroke(InputFrame, Theme.Line, 1, 0.3)
 	local ConfigBox = New("TextBox", {
 		Position = UDim2.fromOffset(12, 0),
@@ -2846,7 +2846,7 @@ function WindowMeta:LoadConfigManger()
 		Parent = ConfigCard,
 	})
 	Corner(DropdownFrame, 7)
-	Gradient(DropdownFrame, Color3.fromRGB(34, 34, 37), Color3.fromRGB(32, 32, 35), 90)
+	Gradient(DropdownFrame, Color3.fromRGB(29, 29, 31), Color3.fromRGB(28, 28, 30), 90)
 	Stroke(DropdownFrame, Theme.Line, 1, 0.3)
 
 	local DropdownValue = New("TextLabel", {
@@ -3511,6 +3511,12 @@ function Library:CreateWindow(Config)
 		Position = UDim2.new(1, -16, 0, 0),
 		Size = UDim2.new(0, 16, 1, 0),
 		BackgroundColor3 = Theme.SidebarBg,
+		Parent = Sidebar,
+	})
+	New("Frame", {
+		Position = UDim2.new(1, -1, 0, 0),
+		Size = UDim2.new(0, 1, 1, 0),
+		BackgroundColor3 = Theme.Line,
 		Parent = Sidebar,
 	})
 
