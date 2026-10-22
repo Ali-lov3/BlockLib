@@ -85,24 +85,24 @@ local function IsAsset(Icon)
 end
 
 local Theme = {
-	WindowTop = Color3.fromRGB(33, 33, 35),
-	WindowBottom = Color3.fromRGB(33, 33, 35),
-	SidebarBg = Color3.fromRGB(27, 27, 29),
-	CardTop = Color3.fromRGB(39, 39, 42),
-	CardBottom = Color3.fromRGB(39, 39, 42),
-	ElementTop = Color3.fromRGB(41, 42, 44),
-	ElementBottom = Color3.fromRGB(39, 41, 42),
-	Field = Color3.fromRGB(32, 32, 35),
-	Line = Color3.fromRGB(50, 50, 54),
-	LineLight = Color3.fromRGB(66, 67, 72),
-	SelectedTop = Color3.fromRGB(45, 45, 49),
-	SelectedBottom = Color3.fromRGB(45, 45, 49),
-	Accent = Color3.fromRGB(74, 117, 170),
-	AccentLight = Color3.fromRGB(86, 129, 183),
-	AccentDark = Color3.fromRGB(66, 105, 157),
-	Text = Color3.fromRGB(232, 232, 236),
-	Sub = Color3.fromRGB(150, 151, 157),
-	Muted = Color3.fromRGB(122, 123, 129),
+	WindowTop = Color3.fromRGB(30, 30, 33),
+	WindowBottom = Color3.fromRGB(30, 30, 33),
+	SidebarBg = Color3.fromRGB(25, 25, 28),
+	CardTop = Color3.fromRGB(37, 37, 41),
+	CardBottom = Color3.fromRGB(37, 37, 41),
+	ElementTop = Color3.fromRGB(40, 40, 44),
+	ElementBottom = Color3.fromRGB(40, 40, 44),
+	Field = Color3.fromRGB(31, 31, 34),
+	Line = Color3.fromRGB(46, 46, 51),
+	LineLight = Color3.fromRGB(56, 56, 62),
+	SelectedTop = Color3.fromRGB(42, 42, 47),
+	SelectedBottom = Color3.fromRGB(42, 42, 47),
+	Accent = Color3.fromRGB(72, 116, 196),
+	AccentLight = Color3.fromRGB(80, 126, 208),
+	AccentDark = Color3.fromRGB(64, 104, 180),
+	Text = Color3.fromRGB(236, 236, 241),
+	Sub = Color3.fromRGB(138, 138, 146),
+	Muted = Color3.fromRGB(120, 120, 128),
 }
 
 local DefaultAccent = { Theme.Accent, Theme.AccentLight, Theme.AccentDark }
@@ -284,7 +284,7 @@ local function BuildPicker()
 	local ColorPopup = New("Frame", {
 		Name = "ColorPopup",
 		Size = UDim2.fromOffset(PickerWidth, PickerHeight),
-		BackgroundColor3 = Color3.fromRGB(36, 37, 40),
+		BackgroundColor3 = Color3.fromRGB(34, 34, 38),
 		Active = true,
 		ZIndex = 301,
 		Parent = ColorCatcher,
@@ -524,18 +524,19 @@ local function NewSection(Column, Title, Icon, Order)
 		Parent = Column,
 	})
 	Holder.SetAttribute(Holder, "SectionHolder", true)
-	New("UIListLayout", { Padding = UDim.new(0, 4), SortOrder = Enum.SortOrder.LayoutOrder, Parent = Holder })
+	New("UIListLayout", { Padding = UDim.new(0, 5), SortOrder = Enum.SortOrder.LayoutOrder, Parent = Holder })
+	New("UIPadding", { PaddingTop = UDim.new(0, 4), PaddingBottom = UDim.new(0, 6), Parent = Holder })
 	local Head = New("Frame", {
-		Size = UDim2.new(1, 0, 0, 20),
+		Size = UDim2.new(1, 0, 0, 22),
 		BackgroundTransparency = 1,
 		LayoutOrder = 1,
 		Parent = Holder,
 	})
-	local HeadIcon = MakeIcon(Head, Icon, 14, Theme.Muted)
+	local HeadIcon = MakeIcon(Head, Icon, 15, Theme.Muted)
 	HeadIcon.Position = UDim2.fromOffset(4, 3)
 	New("TextLabel", {
-		Position = UDim2.fromOffset(24, 0),
-		Size = UDim2.new(1, -24, 1, 0),
+		Position = UDim2.fromOffset(28, 0),
+		Size = UDim2.new(1, -28, 1, 0),
 		Text = Title,
 		Font = Enum.Font.GothamMedium,
 		TextSize = 13,
@@ -543,17 +544,25 @@ local function NewSection(Column, Title, Icon, Order)
 		TextXAlignment = Enum.TextXAlignment.Left,
 		Parent = Head,
 	})
+	local Wrap = New("Frame", {
+		Size = UDim2.new(1, 0, 0, 0),
+		AutomaticSize = Enum.AutomaticSize.Y,
+		BackgroundTransparency = 1,
+		LayoutOrder = 2,
+		Parent = Holder,
+	})
+	MakeShadow(Wrap, UDim2.new(1, 22, 1, 22), UDim2.new(0.5, 0, 0.5, 3), 0.72, 0, Vector2.new(0.5, 0.5))
 	local Card = New("Frame", {
 		Size = UDim2.new(1, 0, 0, 0),
 		AutomaticSize = Enum.AutomaticSize.Y,
 		BackgroundColor3 = Theme.CardTop,
-		LayoutOrder = 2,
-		Parent = Holder,
+		ZIndex = 2,
+		Parent = Wrap,
 	})
-	Corner(Card, 6)
-	Stroke(Card, Theme.Line, 1, 0.35)
+	Corner(Card, 7)
+	Stroke(Card, Color3.fromRGB(14, 14, 17), 1, 0.35)
 	New("UIListLayout", { SortOrder = Enum.SortOrder.LayoutOrder, Parent = Card })
-	New("UIPadding", { PaddingTop = UDim.new(0, 4), PaddingBottom = UDim.new(0, 4), Parent = Card })
+	New("UIPadding", { PaddingTop = UDim.new(0, 5), PaddingBottom = UDim.new(0, 5), Parent = Card })
 	return Card, Holder
 end
 
@@ -688,7 +697,7 @@ local function NewDropdownShell(Card, Name)
 		Position = UDim2.new(0, 0, 1, 6),
 		Size = UDim2.new(1, 0, 0, 0),
 		AutomaticSize = Enum.AutomaticSize.Y,
-		BackgroundColor3 = Color3.fromRGB(29, 30, 32),
+		BackgroundColor3 = Color3.fromRGB(30, 30, 33),
 		Visible = false,
 		ZIndex = 20,
 		Parent = BoxFrame,
@@ -1172,7 +1181,7 @@ function Container:AddDropdown(Name, Info)
 			Parent = Scroll,
 		})
 		New("UIPadding", { PaddingLeft = UDim.new(0, 12), Parent = Button })
-		Button.BackgroundColor3 = Color3.fromRGB(46, 48, 52)
+		Button.BackgroundColor3 = Color3.fromRGB(44, 44, 49)
 		Corner(Button, 6)
 		local Mark = New("Frame", {
 			AnchorPoint = Vector2.new(0, 0.5),
@@ -1484,7 +1493,7 @@ function Container:AddSearchDropdown(Name, Info)
 			Parent = Scroll,
 		})
 		New("UIPadding", { PaddingLeft = UDim.new(0, 12), Parent = Button })
-		Button.BackgroundColor3 = Color3.fromRGB(46, 48, 52)
+		Button.BackgroundColor3 = Color3.fromRGB(44, 44, 49)
 		Corner(Button, 6)
 		local Mark = New("Frame", {
 			AnchorPoint = Vector2.new(0, 0.5),
@@ -1734,7 +1743,7 @@ function Container:AddViewport(Name, Info)
 	local Holder = New("Frame", {
 		Position = UDim2.fromOffset(14, 10),
 		Size = UDim2.new(1, -28, 0, Height),
-		BackgroundColor3 = Color3.fromRGB(29, 30, 32),
+		BackgroundColor3 = Color3.fromRGB(30, 30, 33),
 		Parent = Block,
 	})
 	Corner(Holder, 8)
@@ -2550,7 +2559,7 @@ local function NewSideButton(Icons, Wide)
 		local Button = New("TextButton", {
 			Position = UDim2.fromOffset(10, BaseHeight - 42),
 			Size = UDim2.fromOffset(SidebarWidth - 20, 32),
-			BackgroundColor3 = Color3.fromRGB(46, 48, 52),
+			BackgroundColor3 = Color3.fromRGB(44, 44, 49),
 			Parent = Sidebar,
 		})
 		Corner(Button, 6)
@@ -2585,7 +2594,7 @@ local function NewSideButton(Icons, Wide)
 	local Button = New("TextButton", {
 		Position = UDim2.fromOffset(10 + (Size + Gap) * SideSlots, BaseHeight - 42 - 6 - Size),
 		Size = UDim2.fromOffset(Size, Size),
-		BackgroundColor3 = Color3.fromRGB(46, 48, 52),
+		BackgroundColor3 = Color3.fromRGB(44, 44, 49),
 		Parent = Sidebar,
 	})
 	SideSlots += 1
@@ -2954,7 +2963,7 @@ function WindowMeta:LoadConfigManger()
 		Position = UDim2.new(0, 0, 1, 8),
 		Size = UDim2.new(1, 0, 0, 0),
 		AutomaticSize = Enum.AutomaticSize.Y,
-		BackgroundColor3 = Color3.fromRGB(29, 30, 32),
+		BackgroundColor3 = Color3.fromRGB(30, 30, 33),
 		Visible = false,
 		ZIndex = 50,
 		Parent = DropdownFrame,
@@ -3366,7 +3375,7 @@ function WindowMeta:LoadSerachManger()
 			local Row = New("Frame", {
 				Position = UDim2.fromOffset(0, SlideFrom),
 				Size = UDim2.fromScale(1, 1),
-				BackgroundColor3 = Color3.fromRGB(46, 47, 49),
+				BackgroundColor3 = Color3.fromRGB(42, 42, 47),
 				BackgroundTransparency = 1,
 				Parent = Slot,
 			})
@@ -3413,14 +3422,14 @@ function WindowMeta:LoadSerachManger()
 				Parent = Row,
 			})
 			Hit.MouseEnter.Connect(Hit.MouseEnter, function()
-				Tween(Row, { BackgroundColor3 = Color3.fromRGB(54, 56, 60) }, 0.2)
+				Tween(Row, { BackgroundColor3 = Color3.fromRGB(50, 50, 56) }, 0.2)
 				Tween(RowStroke, { Color = Theme.Accent, Transparency = 0.45 }, 0.2)
 				Tween(Bar, { Size = UDim2.fromOffset(4, 40) }, 0.3, Enum.EasingStyle.Back)
 				Tween(TitleLabel, { Position = UDim2.fromOffset(34, 8) }, 0.25, Enum.EasingStyle.Quint)
 				Tween(SubLabel, { Position = UDim2.fromOffset(34, 34) }, 0.25, Enum.EasingStyle.Quint)
 			end)
 			Hit.MouseLeave.Connect(Hit.MouseLeave, function()
-				Tween(Row, { BackgroundColor3 = Color3.fromRGB(46, 47, 49) }, 0.2)
+				Tween(Row, { BackgroundColor3 = Color3.fromRGB(42, 42, 47) }, 0.2)
 				Tween(RowStroke, { Color = Theme.Line, Transparency = 0.6 }, 0.2)
 				Tween(Bar, { Size = UDim2.fromOffset(4, 32) }, 0.2)
 				Tween(TitleLabel, { Position = UDim2.fromOffset(28, 8) }, 0.25, Enum.EasingStyle.Quint)
