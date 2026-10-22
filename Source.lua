@@ -288,7 +288,7 @@ local function BuildPicker()
 		ZIndex = 301,
 		Parent = ColorCatcher,
 	})
-	local PopupShadow = MakeShadow(ColorCatcher, UDim2.fromOffset(PickerWidth + 44, PickerHeight + 44), UDim2.fromOffset(0, 0), 0.45, 300)
+	local PopupShadow = MakeShadow(ColorCatcher, UDim2.fromOffset(PickerWidth + 44, PickerHeight + 44), UDim2.fromOffset(0, 0), 0.78, 300)
 	Corner(ColorPopup, 12)
 	Stroke(ColorPopup, Theme.LineLight, 1, 0.4)
 
@@ -552,9 +552,9 @@ local function NewSection(Column, Title, Icon, Order)
 	Corner(Card, 8)
 	Gradient(Card, Theme.CardTop, Theme.CardBottom, 90)
 	local CardStroke = Stroke(Card, Color3.new(1, 1, 1), 1, 0)
-	Gradient(CardStroke, Theme.Line, Theme.Line, 90, 0.1, 0.1)
+	Gradient(CardStroke, Color3.fromRGB(53, 54, 56), Color3.fromRGB(53, 54, 56), 90, 0, 0)
 	New("UIListLayout", { SortOrder = Enum.SortOrder.LayoutOrder, Parent = Card })
-	New("UIPadding", { PaddingTop = UDim.new(0, 9), PaddingBottom = UDim.new(0, 9), Parent = Card })
+	New("UIPadding", { PaddingTop = UDim.new(0, 8), PaddingBottom = UDim.new(0, 8), Parent = Card })
 	return Card, Holder
 end
 
@@ -636,8 +636,8 @@ local function NewField(Card, Name)
 	})
 	New("UIListLayout", { Padding = UDim.new(0, 6), SortOrder = Enum.SortOrder.LayoutOrder, Parent = Block })
 	New("UIPadding", {
-		PaddingTop = UDim.new(0, 6),
-		PaddingBottom = UDim.new(0, 8),
+		PaddingTop = UDim.new(0, 3),
+		PaddingBottom = UDim.new(0, 5),
 		PaddingLeft = UDim.new(0, 18),
 		PaddingRight = UDim.new(0, 17),
 		Parent = Block,
@@ -694,7 +694,7 @@ local function NewDropdownShell(Card, Name)
 		ZIndex = 20,
 		Parent = BoxFrame,
 	})
-	local ListShadow = MakeShadow(BoxFrame, UDim2.new(1, 44, 0, 44), UDim2.new(0, -22, 1, 0), 0.4, 19)
+	local ListShadow = MakeShadow(BoxFrame, UDim2.new(1, 44, 0, 44), UDim2.new(0, -22, 1, 0), 0.78, 19)
 	ListShadow.Visible = false
 	List.GetPropertyChangedSignal(List, "Visible").Connect(List.GetPropertyChangedSignal(List, "Visible"), function()
 		ListShadow.Visible = List.Visible
@@ -797,6 +797,25 @@ end
 
 function Container:SetVisible(Visible)
 	if self.Holder then self.Holder.Visible = Visible and true or false end
+end
+
+function Container:AddSeparator()
+	local Card = CardOf(self)
+	local Wrap = New("Frame", {
+		Size = UDim2.new(1, 0, 0, 16),
+		BackgroundTransparency = 1,
+		LayoutOrder = NextOrder(Card),
+		Parent = Card,
+	})
+	local Pill = New("Frame", {
+		Position = UDim2.fromOffset(18, 3),
+		Size = UDim2.new(1, -35, 0, 10),
+		BackgroundColor3 = Theme.Field,
+		Parent = Wrap,
+	})
+	Corner(Pill, 5)
+	Stroke(Pill, Theme.Line, 1, 0.55)
+	return Wrap
 end
 
 function Container:AddToggle(Name, Info)
@@ -963,7 +982,7 @@ function Container:AddSlider(Name, Info)
 	if Inc <= 0 then Inc = 1 end
 
 	local Block = New("Frame", {
-		Size = UDim2.new(1, 0, 0, 60),
+		Size = UDim2.new(1, 0, 0, 52),
 		BackgroundTransparency = 1,
 		LayoutOrder = NextOrder(Card),
 		Parent = Card,
@@ -987,7 +1006,7 @@ function Container:AddSlider(Name, Info)
 	})
 	Corner(ValueBox, 6)
 	Gradient(ValueBox, Theme.ElementTop, Theme.ElementBottom, 90)
-	local ValueStroke = Stroke(ValueBox, Theme.Accent, 1, 1)
+	local ValueStroke = Stroke(ValueBox, Theme.Line, 1, 0.35)
 	local ValueText = New("TextBox", {
 		Size = UDim2.fromScale(1, 1),
 		BackgroundTransparency = 1,
@@ -1049,11 +1068,11 @@ function Container:AddSlider(Name, Info)
 	ControlBinds[Key] = SetValue
 
 	ValueText.Focused.Connect(ValueText.Focused, function()
-		Tween(ValueStroke, { Transparency = 0 }, 0.2)
+		Tween(ValueStroke, { Transparency = 0, Color = Theme.Accent }, 0.2)
 		Tween(ValueText, { TextColor3 = Theme.Text }, 0.2)
 	end)
 	ValueText.FocusLost.Connect(ValueText.FocusLost, function()
-		Tween(ValueStroke, { Transparency = 1 }, 0.2)
+		Tween(ValueStroke, { Transparency = 0.35, Color = Theme.Line }, 0.2)
 		Tween(ValueText, { TextColor3 = Theme.Sub }, 0.2)
 		local Typed = tonumber(ValueText.Text)
 		if Typed then
@@ -3530,12 +3549,12 @@ function Library:CreateWindow(Config)
 
 	Scale = New("UIScale", { Parent = Main })
 
-	local WindowShadow = MakeShadow(Gui, UDim2.fromOffset(BaseWidth + 110, BaseHeight + 110), Main.Position, 0.35, 0, Vector2.new(0.5, 0.5))
+	local WindowShadow = MakeShadow(Gui, UDim2.fromOffset(BaseWidth + 50, BaseHeight + 50), Main.Position, 0.82, 0, Vector2.new(0.5, 0.5))
 	local ShadowScale = New("UIScale", { Parent = WindowShadow })
 	local function SyncShadow()
 		ShadowScale.Scale = Scale.Scale
 		WindowShadow.Visible = Main.Visible
-		WindowShadow.Position = UDim2.new(Main.Position.X.Scale, Main.Position.X.Offset, Main.Position.Y.Scale, Main.Position.Y.Offset + 8 * Scale.Scale)
+		WindowShadow.Position = UDim2.new(Main.Position.X.Scale, Main.Position.X.Offset, Main.Position.Y.Scale, Main.Position.Y.Offset + 4 * Scale.Scale)
 	end
 	Main.GetPropertyChangedSignal(Main, "Position").Connect(Main.GetPropertyChangedSignal(Main, "Position"), SyncShadow)
 	Main.GetPropertyChangedSignal(Main, "Visible").Connect(Main.GetPropertyChangedSignal(Main, "Visible"), SyncShadow)
