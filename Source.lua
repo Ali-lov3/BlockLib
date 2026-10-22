@@ -93,13 +93,15 @@ local Theme = {
 	ElementTop = Color3.fromRGB(40, 40, 44),
 	ElementBottom = Color3.fromRGB(40, 40, 44),
 	Field = Color3.fromRGB(29, 30, 33),
+	FieldTop = Color3.fromRGB(21, 22, 25),
+	FieldBottom = Color3.fromRGB(33, 34, 38),
 	Line = Color3.fromRGB(46, 46, 51),
 	LineLight = Color3.fromRGB(56, 56, 62),
 	SelectedTop = Color3.fromRGB(42, 42, 47),
 	SelectedBottom = Color3.fromRGB(42, 42, 47),
-	Accent = Color3.fromRGB(72, 116, 196),
-	AccentLight = Color3.fromRGB(80, 126, 208),
-	AccentDark = Color3.fromRGB(64, 104, 180),
+	Accent = Color3.fromRGB(74, 118, 198),
+	AccentLight = Color3.fromRGB(92, 140, 220),
+	AccentDark = Color3.fromRGB(58, 96, 170),
 	Text = Color3.fromRGB(236, 236, 241),
 	Sub = Color3.fromRGB(138, 138, 146),
 	Muted = Color3.fromRGB(120, 120, 128),
@@ -667,7 +669,7 @@ local function NewField(Card, Name)
 		Parent = Block,
 	})
 	Corner(BoxFrame, 5)
-	Gradient(BoxFrame, Theme.Field, Theme.Field, 90)
+	Gradient(BoxFrame, Theme.FieldTop, Theme.FieldBottom, 90)
 	local BoxStroke = Stroke(BoxFrame, Theme.Line, 1, 0.3)
 	return Block, BoxFrame, BoxStroke
 end
@@ -856,7 +858,7 @@ function Container:AddToggle(Name, Info)
 		Parent = Row,
 	})
 	Corner(Switch, 12)
-	Gradient(Switch, Theme.Field, Theme.Field, 90)
+	Gradient(Switch, Theme.FieldTop, Theme.FieldBottom, 90)
 	Stroke(Switch, Theme.Line, 1, 0.4)
 	local OnLayer = New("Frame", {
 		Size = UDim2.fromScale(1, 1),
@@ -865,8 +867,8 @@ function Container:AddToggle(Name, Info)
 		Parent = Switch,
 	})
 	Corner(OnLayer, 12)
-	local OnGrad = Gradient(OnLayer, Theme.AccentDark, Theme.AccentLight, 0)
-	RegisterAccentGradient(OnGrad, 2)
+	local OnGrad = Gradient(OnLayer, Theme.AccentLight, Theme.AccentDark, 90)
+	RegisterAccentGradient(OnGrad, 1)
 
 	local Knob = New("Frame", {
 		AnchorPoint = Vector2.new(0, 0.5),
@@ -926,7 +928,7 @@ function Container:AddToggle(Name, Info)
 		})
 		Used += 28
 		Corner(BoxFrame, 5)
-		Gradient(BoxFrame, Theme.ElementTop, Theme.ElementBottom, 90)
+		Gradient(BoxFrame, Theme.FieldTop, Theme.FieldBottom, 90)
 		Stroke(BoxFrame, Theme.Line, 1, 0.4)
 		local Box = New("TextButton", {
 			Size = UDim2.fromScale(1, 1),
@@ -1014,7 +1016,7 @@ function Container:AddSlider(Name, Info)
 		Parent = Block,
 	})
 	Corner(ValueBox, 6)
-	Gradient(ValueBox, Theme.ElementTop, Theme.ElementBottom, 90)
+	Gradient(ValueBox, Theme.FieldTop, Theme.FieldBottom, 90)
 	local ValueStroke = Stroke(ValueBox, Theme.Line, 1, 0.35)
 	local ValueText = New("TextBox", {
 		Size = UDim2.fromScale(1, 1),
@@ -1032,7 +1034,7 @@ function Container:AddSlider(Name, Info)
 		Parent = Block,
 	})
 	Corner(Track, 5)
-	Gradient(Track, Theme.Field, Theme.Field, 90)
+	Gradient(Track, Theme.FieldTop, Theme.FieldBottom, 90)
 	Stroke(Track, Theme.Line, 1, 0.4)
 	local Fill = New("Frame", {
 		Size = UDim2.fromScale(0, 1),
@@ -1040,8 +1042,8 @@ function Container:AddSlider(Name, Info)
 		Parent = Track,
 	})
 	Corner(Fill, 5)
-	local FillGrad = Gradient(Fill, Theme.AccentDark, Theme.AccentLight, 0)
-	RegisterAccentGradient(FillGrad, 2)
+	local FillGrad = Gradient(Fill, Theme.AccentLight, Theme.AccentDark, 90)
+	RegisterAccentGradient(FillGrad, 1)
 
 	local Knob = New("Frame", {
 		AnchorPoint = Vector2.new(0.5, 0.5),
@@ -2915,7 +2917,7 @@ function WindowMeta:LoadConfigManger()
 		Parent = ConfigCard,
 	})
 	Corner(InputFrame, 7)
-	Gradient(InputFrame, Theme.Field, Theme.Field, 90)
+	Gradient(InputFrame, Theme.FieldTop, Theme.FieldBottom, 90)
 	Stroke(InputFrame, Theme.Line, 1, 0.3)
 	local ConfigBox = New("TextBox", {
 		Position = UDim2.fromOffset(12, 0),
@@ -2938,7 +2940,7 @@ function WindowMeta:LoadConfigManger()
 		Parent = ConfigCard,
 	})
 	Corner(DropdownFrame, 7)
-	Gradient(DropdownFrame, Theme.Field, Theme.Field, 90)
+	Gradient(DropdownFrame, Theme.FieldTop, Theme.FieldBottom, 90)
 	Stroke(DropdownFrame, Theme.Line, 1, 0.3)
 
 	local DropdownValue = New("TextLabel", {
@@ -3166,7 +3168,7 @@ function WindowMeta:LoadSerachManger()
 		Parent = Modal.Panel,
 	})
 	Corner(ModalSearch, 12)
-	Gradient(ModalSearch, Theme.Field, Theme.Field, 90)
+	Gradient(ModalSearch, Theme.FieldTop, Theme.FieldBottom, 90)
 	local ModalStroke = Stroke(ModalSearch, Theme.Line, 1, 0.1)
 	local ModalIcon = MakeIcon(ModalSearch, { "search" }, 24, Theme.Muted)
 	ModalIcon.Position = UDim2.fromOffset(16, 15)
