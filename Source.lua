@@ -85,11 +85,11 @@ local function IsAsset(Icon)
 end
 
 local Theme = {
-	WindowTop = Color3.fromRGB(30, 30, 33),
-	WindowBottom = Color3.fromRGB(30, 30, 33),
+	WindowTop = Color3.fromRGB(30, 31, 34),
+	WindowBottom = Color3.fromRGB(30, 31, 34),
 	SidebarBg = Color3.fromRGB(25, 25, 28),
-	CardTop = Color3.fromRGB(37, 37, 41),
-	CardBottom = Color3.fromRGB(37, 37, 41),
+	CardTop = Color3.fromRGB(39, 40, 44),
+	CardBottom = Color3.fromRGB(39, 40, 44),
 	ElementTop = Color3.fromRGB(40, 40, 44),
 	ElementBottom = Color3.fromRGB(40, 40, 44),
 	Field = Color3.fromRGB(31, 31, 34),
@@ -495,12 +495,12 @@ local function MakeColorSwatch(Parent, Key, Default, RightOffset, OnChange)
 	local Swatch = New("TextButton", {
 		AnchorPoint = Vector2.new(1, 0.5),
 		Position = UDim2.new(1, RightOffset, 0.5, 0),
-		Size = UDim2.fromOffset(14, 14),
+		Size = UDim2.fromOffset(22, 18),
 		BackgroundColor3 = Default,
 		ZIndex = 2,
 		Parent = Parent,
 	})
-	Corner(Swatch, 4)
+	Corner(Swatch, 5)
 	Stroke(Swatch, Theme.LineLight, 1, 0.6)
 	Flags[Key] = Default
 	local function Set(Color, Silent)
@@ -551,7 +551,7 @@ local function NewSection(Column, Title, Icon, Order)
 		LayoutOrder = 2,
 		Parent = Holder,
 	})
-	MakeShadow(Wrap, UDim2.new(1, 22, 1, 22), UDim2.new(0.5, 0, 0.5, 3), 0.72, 0, Vector2.new(0.5, 0.5))
+	MakeShadow(Wrap, UDim2.new(1, 22, 1, 22), UDim2.new(0.5, 0, 0.5, 3), 0.8, 0, Vector2.new(0.5, 0.5))
 	local Card = New("Frame", {
 		Size = UDim2.new(1, 0, 0, 0),
 		AutomaticSize = Enum.AutomaticSize.Y,
@@ -560,7 +560,7 @@ local function NewSection(Column, Title, Icon, Order)
 		Parent = Wrap,
 	})
 	Corner(Card, 7)
-	Stroke(Card, Color3.fromRGB(14, 14, 17), 1, 0.35)
+	Stroke(Card, Theme.LineLight, 1, 0.5)
 	New("UIListLayout", { SortOrder = Enum.SortOrder.LayoutOrder, Parent = Card })
 	New("UIPadding", { PaddingTop = UDim.new(0, 5), PaddingBottom = UDim.new(0, 5), Parent = Card })
 	return Card, Holder
@@ -832,7 +832,7 @@ function Container:AddToggle(Name, Info)
 	local Key = KeyOf(self, Name, Info)
 	local Own = {}
 	local Row = New("TextButton", {
-		Size = UDim2.new(1, 0, 0, 28),
+		Size = UDim2.new(1, 0, 0, 34),
 		BackgroundTransparency = 1,
 		LayoutOrder = NextOrder(Card),
 		Parent = Card,
@@ -841,7 +841,7 @@ function Container:AddToggle(Name, Info)
 		Position = UDim2.fromOffset(12, 0),
 		Size = UDim2.new(1, -120, 1, 0),
 		Text = Name,
-		Font = Enum.Font.GothamMedium,
+		Font = Enum.Font.GothamBold,
 		TextSize = 13,
 		TextColor3 = Theme.Muted,
 		TextXAlignment = Enum.TextXAlignment.Left,
@@ -851,31 +851,32 @@ function Container:AddToggle(Name, Info)
 	local Switch = New("Frame", {
 		AnchorPoint = Vector2.new(1, 0.5),
 		Position = UDim2.new(1, -12, 0.5, 0),
-		Size = UDim2.fromOffset(34, 18),
+		Size = UDim2.fromOffset(44, 24),
 		BackgroundColor3 = Color3.new(1, 1, 1),
 		Parent = Row,
 	})
-	Corner(Switch, 9)
+	Corner(Switch, 12)
 	Gradient(Switch, Theme.Field, Theme.Field, 90)
+	Stroke(Switch, Theme.Line, 1, 0.4)
 	local OnLayer = New("Frame", {
 		Size = UDim2.fromScale(1, 1),
 		BackgroundColor3 = Color3.new(1, 1, 1),
 		BackgroundTransparency = 1,
 		Parent = Switch,
 	})
-	Corner(OnLayer, 9)
+	Corner(OnLayer, 12)
 	local OnGrad = Gradient(OnLayer, Theme.AccentDark, Theme.AccentLight, 0)
 	RegisterAccentGradient(OnGrad, 2)
 
 	local Knob = New("Frame", {
 		AnchorPoint = Vector2.new(0, 0.5),
 		Position = UDim2.new(0, 3, 0.5, 0),
-		Size = UDim2.fromOffset(16, 16),
+		Size = UDim2.fromOffset(18, 18),
 		BackgroundColor3 = Color3.new(1, 1, 1),
 		ZIndex = 2,
 		Parent = Switch,
 	})
-	Corner(Knob, 8)
+	Corner(Knob, 9)
 
 	local State = false
 	local Group
@@ -886,7 +887,7 @@ function Container:AddToggle(Name, Info)
 		Flags[Key] = State
 		Tween(OnLayer, { BackgroundTransparency = State and 0 or 1 })
 		Tween(Knob, {
-			Position = State and UDim2.new(1, -19, 0.5, 0) or UDim2.new(0, 3, 0.5, 0),
+			Position = State and UDim2.new(1, -21, 0.5, 0) or UDim2.new(0, 3, 0.5, 0),
 			BackgroundColor3 = State and Color3.new(1, 1, 1) or Color3.fromRGB(110, 110, 118),
 		})
 		Tween(Label, { TextColor3 = State and Theme.Text or Theme.Muted })
@@ -903,12 +904,12 @@ function Container:AddToggle(Name, Info)
 		Set(not State)
 	end)
 
-	local Used = 12 + 34
+	local Used = 12 + 44
 
 	if Info.Color then
 		Used += 8
 		MakeColorSwatch(Row, Key .. "/Color", Info.Color, -Used, Info.ColorCallback)
-		Used += 14
+		Used += 22
 	end
 
 	if Info.Keybind then
@@ -919,12 +920,12 @@ function Container:AddToggle(Name, Info)
 		local BoxFrame = New("Frame", {
 			AnchorPoint = Vector2.new(1, 0.5),
 			Position = UDim2.new(1, -Used, 0.5, 0),
-			Size = UDim2.fromOffset(22, 16),
+			Size = UDim2.fromOffset(28, 22),
 			BackgroundColor3 = Color3.new(1, 1, 1),
 			Parent = Row,
 		})
-		Used += 22
-		Corner(BoxFrame, 4)
+		Used += 28
+		Corner(BoxFrame, 5)
 		Gradient(BoxFrame, Theme.ElementTop, Theme.ElementBottom, 90)
 		Stroke(BoxFrame, Theme.Line, 1, 0.4)
 		local Box = New("TextButton", {
@@ -932,7 +933,7 @@ function Container:AddToggle(Name, Info)
 			BackgroundTransparency = 1,
 			Text = BindKey and BindKey.Name or "-",
 			Font = Enum.Font.GothamMedium,
-			TextSize = 10,
+			TextSize = 11,
 			TextColor3 = Theme.Sub,
 			TextTruncate = Enum.TextTruncate.AtEnd,
 			ZIndex = 2,
@@ -990,13 +991,13 @@ function Container:AddSlider(Name, Info)
 	if Inc <= 0 then Inc = 1 end
 
 	local Block = New("Frame", {
-		Size = UDim2.new(1, 0, 0, 40),
+		Size = UDim2.new(1, 0, 0, 46),
 		BackgroundTransparency = 1,
 		LayoutOrder = NextOrder(Card),
 		Parent = Card,
 	})
 	New("TextLabel", {
-		Position = UDim2.fromOffset(12, 2),
+		Position = UDim2.fromOffset(12, 3),
 		Size = UDim2.new(0.6, 0, 0, 20),
 		Text = Name,
 		Font = Enum.Font.GothamBold,
@@ -1008,52 +1009,53 @@ function Container:AddSlider(Name, Info)
 	local ValueBox = New("Frame", {
 		AnchorPoint = Vector2.new(1, 0),
 		Position = UDim2.new(1, -12, 0, 4),
-		Size = UDim2.fromOffset(42, 16),
+		Size = UDim2.fromOffset(46, 22),
 		BackgroundColor3 = Color3.new(1, 1, 1),
 		Parent = Block,
 	})
-	Corner(ValueBox, 4)
+	Corner(ValueBox, 6)
 	Gradient(ValueBox, Theme.ElementTop, Theme.ElementBottom, 90)
 	local ValueStroke = Stroke(ValueBox, Theme.Line, 1, 0.35)
 	local ValueText = New("TextBox", {
 		Size = UDim2.fromScale(1, 1),
 		BackgroundTransparency = 1,
 		Font = Enum.Font.GothamMedium,
-		TextSize = 10,
+		TextSize = 11,
 		TextColor3 = Theme.Sub,
 		ClearTextOnFocus = false,
 		Parent = ValueBox,
 	})
 	local Track = New("Frame", {
-		Position = UDim2.fromOffset(12, 27),
-		Size = UDim2.new(1, -24, 0, 4),
+		Position = UDim2.fromOffset(12, 32),
+		Size = UDim2.new(1, -24, 0, 9),
 		BackgroundColor3 = Color3.new(1, 1, 1),
 		Parent = Block,
 	})
-	Corner(Track, 2)
+	Corner(Track, 5)
 	Gradient(Track, Theme.Field, Theme.Field, 90)
+	Stroke(Track, Theme.Line, 1, 0.4)
 	local Fill = New("Frame", {
 		Size = UDim2.fromScale(0, 1),
 		BackgroundColor3 = Color3.new(1, 1, 1),
 		Parent = Track,
 	})
-	Corner(Fill, 2)
+	Corner(Fill, 5)
 	local FillGrad = Gradient(Fill, Theme.AccentDark, Theme.AccentLight, 0)
 	RegisterAccentGradient(FillGrad, 2)
 
 	local Knob = New("Frame", {
 		AnchorPoint = Vector2.new(0.5, 0.5),
 		Position = UDim2.fromScale(0, 0.5),
-		Size = UDim2.fromOffset(12, 12),
+		Size = UDim2.fromOffset(16, 16),
 		BackgroundColor3 = Color3.new(1, 1, 1),
 		ZIndex = 2,
 		Parent = Track,
 	})
-	Corner(Knob, 6)
+	Corner(Knob, 8)
 	Gradient(Knob, Color3.fromRGB(232, 232, 244), Color3.fromRGB(216, 217, 236), 90)
-	Stroke(Knob, Theme.Field, 2)
+	Stroke(Knob, Theme.Field, 1)
 	local Hit = New("TextButton", {
-		Position = UDim2.fromOffset(12, 16),
+		Position = UDim2.fromOffset(12, 24),
 		Size = UDim2.new(1, -24, 0, 22),
 		BackgroundTransparency = 1,
 		ZIndex = 3,
