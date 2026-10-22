@@ -2466,19 +2466,19 @@ end
 local function NewSideButton(Icons, Wide)
 	if Wide then
 		local Button = New("TextButton", {
-			Position = UDim2.fromOffset(12, BaseHeight - 54),
-			Size = UDim2.fromOffset(SidebarWidth - 24, 42),
+			Position = UDim2.fromOffset(16, BaseHeight - 61),
+			Size = UDim2.fromOffset(SidebarWidth - 32, 45),
 			BackgroundColor3 = Color3.fromRGB(34, 34, 34),
 			Parent = Sidebar,
 		})
-		Corner(Button, 8)
-		local ButtonStroke = Stroke(Button, Theme.Line, 1, 1)
+		Corner(Button, 7)
+		local ButtonStroke = Stroke(Button, Theme.LineLight, 1, 0.7)
 		local ButtonIcon = MakeIcon(Button, Icons, 20, Theme.Muted)
 		ButtonIcon.AnchorPoint = Vector2.new(0, 0.5)
-		ButtonIcon.Position = UDim2.new(0, 12, 0.5, 0)
+		ButtonIcon.Position = UDim2.new(0, 14, 0.5, 0)
 		local ButtonText = New("TextLabel", {
-			Position = UDim2.fromOffset(44, 0),
-			Size = UDim2.new(1, -52, 1, 0),
+			Position = UDim2.fromOffset(46, 0),
+			Size = UDim2.new(1, -54, 1, 0),
 			Text = "Search...",
 			Font = Enum.Font.GothamMedium,
 			TextSize = 16,
@@ -2492,7 +2492,7 @@ local function NewSideButton(Icons, Wide)
 			Tween(ButtonText, { TextColor3 = Theme.Sub }, 0.2)
 		end)
 		Button.MouseLeave.Connect(Button.MouseLeave, function()
-			Tween(ButtonStroke, { Transparency = 1 }, 0.2)
+			Tween(ButtonStroke, { Transparency = 0.7 }, 0.2)
 			Tween(ButtonIcon, { ImageColor3 = Theme.Muted }, 0.2)
 			Tween(ButtonText, { TextColor3 = Theme.Muted }, 0.2)
 		end)
@@ -2501,7 +2501,7 @@ local function NewSideButton(Icons, Wide)
 
 	local Size, Gap = 36, 8
 	local Button = New("TextButton", {
-		Position = UDim2.fromOffset(12 + (Size + Gap) * SideSlots, BaseHeight - 54 - Gap - Size),
+		Position = UDim2.fromOffset(16 + (Size + Gap) * SideSlots, BaseHeight - 61 - 10 - Size),
 		Size = UDim2.fromOffset(Size, Size),
 		BackgroundColor3 = Color3.fromRGB(34, 34, 34),
 		Parent = Sidebar,
@@ -2546,8 +2546,9 @@ local function SelectTab(Name)
 		end
 		Tween(Tab.Button, { BackgroundTransparency = On and 0 or 1 })
 		Tween(Tab.Stroke, { Transparency = 1 })
-		Tween(Tab.Text, { TextColor3 = On and Theme.Text or Theme.Muted })
-		Tween(Tab.Icon, { ImageColor3 = On and Theme.Text or Theme.Muted })
+		Tab.Text.Font = On and Enum.Font.GothamBold or Enum.Font.GothamMedium
+		Tween(Tab.Text, { TextColor3 = On and Color3.new(1, 1, 1) or Theme.Muted })
+		Tween(Tab.Icon, { ImageColor3 = On and Color3.new(1, 1, 1) or Theme.Muted })
 	end
 end
 
@@ -2584,34 +2585,34 @@ function WindowMeta:AddTab(Name, Icon, Category)
 		local First = LastCategory == nil
 		LastCategory = Category
 		local CategoryLabel = New("TextLabel", {
-			Size = UDim2.new(1, 0, 0, First and 26 or 38),
+			Size = UDim2.new(1, 0, 0, 26),
 			Text = Category,
 			Font = Enum.Font.GothamMedium,
-			TextSize = 14,
+			TextSize = 13,
 			TextColor3 = Theme.Muted,
 			TextXAlignment = Enum.TextXAlignment.Left,
-			TextYAlignment = First and Enum.TextYAlignment.Center or Enum.TextYAlignment.Bottom,
+			TextYAlignment = Enum.TextYAlignment.Center,
 			LayoutOrder = TabOrder,
 			Parent = Items,
 		})
-		New("UIPadding", { PaddingLeft = UDim.new(0, 6), PaddingBottom = UDim.new(0, First and 2 or 6), Parent = CategoryLabel })
+		New("UIPadding", { PaddingLeft = UDim.new(0, 4), Parent = CategoryLabel })
 	end
 	TabOrder += 1
 
 	local Button = New("TextButton", {
-		Size = UDim2.new(1, 0, 0, 42),
+		Size = UDim2.new(1, 0, 0, 45),
 		BackgroundColor3 = Color3.fromRGB(48, 48, 48),
 		BackgroundTransparency = 1,
 		LayoutOrder = TabOrder,
 		Parent = Items,
 	})
-	Corner(Button, 8)
+	Corner(Button, 7)
 	local ButtonStroke = Stroke(Button, Theme.LineLight, 1, 1)
-	local TabIcon = MakeIcon(Button, Icon or "layers", 22, Theme.Muted)
-	TabIcon.Position = UDim2.fromOffset(12, 10)
+	local TabIcon = MakeIcon(Button, Icon or "layers", 24, Theme.Muted)
+	TabIcon.Position = UDim2.fromOffset(13, 10)
 	local TabText = New("TextLabel", {
-		Position = UDim2.fromOffset(46, 0),
-		Size = UDim2.new(1, -46, 1, 0),
+		Position = UDim2.fromOffset(56, 0),
+		Size = UDim2.new(1, -56, 1, 0),
 		Text = Name,
 		Font = Enum.Font.GothamMedium,
 		TextSize = 18,
@@ -3504,20 +3505,20 @@ function Library:CreateWindow(Config)
 	})
 
 	local Logo = New("Frame", {
-		Position = UDim2.fromOffset(20, 18),
-		Size = UDim2.fromOffset(208, 44),
+		Position = UDim2.fromOffset(34, 18),
+		Size = UDim2.fromOffset(194, 44),
 		BackgroundTransparency = 1,
 		Parent = Sidebar,
 	})
-	local LogoIcon = MakeAccentIcon(Logo, WindowConfig.Logo, 34)
-	LogoIcon.Position = UDim2.fromOffset(0, 5)
+	local LogoIcon = MakeAccentIcon(Logo, WindowConfig.Logo, 32)
+	LogoIcon.Position = UDim2.fromOffset(0, 6)
 
 	New("TextLabel", {
-		Position = UDim2.fromOffset(46, 0),
-		Size = UDim2.new(1, -46, 1, 0),
+		Position = UDim2.fromOffset(50, 0),
+		Size = UDim2.new(1, -50, 1, 0),
 		Text = WindowConfig.Title,
-		Font = Enum.Font.GothamBold,
-		TextSize = 26,
+		Font = Enum.Font.GothamMedium,
+		TextSize = 27,
 		TextColor3 = Theme.Text,
 		TextXAlignment = Enum.TextXAlignment.Left,
 		TextTruncate = Enum.TextTruncate.AtEnd,
@@ -3532,7 +3533,7 @@ function Library:CreateWindow(Config)
 
 	local ItemsMask = New("Frame", {
 		Position = UDim2.fromOffset(0, 74),
-		Size = UDim2.fromOffset(SidebarWidth, 548),
+		Size = UDim2.fromOffset(SidebarWidth, 540),
 		BackgroundTransparency = 1,
 		ClipsDescendants = true,
 		Parent = Sidebar,
@@ -3548,10 +3549,10 @@ function Library:CreateWindow(Config)
 		ElasticBehavior = Enum.ElasticBehavior.Never,
 		Parent = ItemsMask,
 	})
-	New("UIListLayout", { Padding = UDim.new(0, 4), SortOrder = Enum.SortOrder.LayoutOrder, Parent = Items })
+	New("UIListLayout", { Padding = UDim.new(0, 11), SortOrder = Enum.SortOrder.LayoutOrder, Parent = Items })
 	New("UIPadding", {
-		PaddingLeft = UDim.new(0, 12),
-		PaddingRight = UDim.new(0, 12),
+		PaddingLeft = UDim.new(0, 16),
+		PaddingRight = UDim.new(0, 16),
 		PaddingBottom = UDim.new(0, 10),
 		PaddingTop = UDim.new(0, 2),
 		Parent = Items,
