@@ -381,7 +381,7 @@ local function BuildPicker()
 		Size = UDim2.fromScale(1, 1),
 		BackgroundTransparency = 1,
 		Font = Enum.Font.GothamMedium,
-		TextSize = 15,
+		TextSize = 13,
 		TextColor3 = Theme.Sub,
 		PlaceholderText = "#RRGGBB",
 		PlaceholderColor3 = Theme.Muted,
@@ -495,12 +495,12 @@ local function MakeColorSwatch(Parent, Key, Default, RightOffset, OnChange)
 	local Swatch = New("TextButton", {
 		AnchorPoint = Vector2.new(1, 0.5),
 		Position = UDim2.new(1, RightOffset, 0.5, 0),
-		Size = UDim2.fromOffset(20, 20),
+		Size = UDim2.fromOffset(14, 14),
 		BackgroundColor3 = Default,
 		ZIndex = 2,
 		Parent = Parent,
 	})
-	Corner(Swatch, 5)
+	Corner(Swatch, 4)
 	Stroke(Swatch, Theme.LineLight, 1, 0.6)
 	Flags[Key] = Default
 	local function Set(Color, Silent)
@@ -524,7 +524,7 @@ local function NewSection(Column, Title, Icon, Order)
 		Parent = Column,
 	})
 	Holder.SetAttribute(Holder, "SectionHolder", true)
-	New("UIListLayout", { Padding = UDim.new(0, 5), SortOrder = Enum.SortOrder.LayoutOrder, Parent = Holder })
+	New("UIListLayout", { Padding = UDim.new(0, 4), SortOrder = Enum.SortOrder.LayoutOrder, Parent = Holder })
 	local Head = New("Frame", {
 		Size = UDim2.new(1, 0, 0, 20),
 		BackgroundTransparency = 1,
@@ -553,7 +553,7 @@ local function NewSection(Column, Title, Icon, Order)
 	Corner(Card, 6)
 	Stroke(Card, Theme.Line, 1, 0.35)
 	New("UIListLayout", { SortOrder = Enum.SortOrder.LayoutOrder, Parent = Card })
-	New("UIPadding", { PaddingTop = UDim.new(0, 5), PaddingBottom = UDim.new(0, 5), Parent = Card })
+	New("UIPadding", { PaddingTop = UDim.new(0, 4), PaddingBottom = UDim.new(0, 4), Parent = Card })
 	return Card, Holder
 end
 
@@ -633,10 +633,10 @@ local function NewField(Card, Name)
 		LayoutOrder = NextOrder(Card),
 		Parent = Card,
 	})
-	New("UIListLayout", { Padding = UDim.new(0, 6), SortOrder = Enum.SortOrder.LayoutOrder, Parent = Block })
+	New("UIListLayout", { Padding = UDim.new(0, 3), SortOrder = Enum.SortOrder.LayoutOrder, Parent = Block })
 	New("UIPadding", {
-		PaddingTop = UDim.new(0, 3),
-		PaddingBottom = UDim.new(0, 5),
+		PaddingTop = UDim.new(0, 2),
+		PaddingBottom = UDim.new(0, 4),
 		PaddingLeft = UDim.new(0, 12),
 		PaddingRight = UDim.new(0, 12),
 		Parent = Block,
@@ -645,19 +645,19 @@ local function NewField(Card, Name)
 		Size = UDim2.new(1, 0, 0, 20),
 		Text = Name,
 		Font = Enum.Font.GothamBold,
-		TextSize = 14,
+		TextSize = 13,
 		TextColor3 = Theme.Text,
 		TextXAlignment = Enum.TextXAlignment.Left,
 		LayoutOrder = 1,
 		Parent = Block,
 	})
 	local BoxFrame = New("Frame", {
-		Size = UDim2.new(1, 0, 0, 28),
+		Size = UDim2.new(1, 0, 0, 26),
 		BackgroundColor3 = Color3.new(1, 1, 1),
 		LayoutOrder = 2,
 		Parent = Block,
 	})
-	Corner(BoxFrame, 7)
+	Corner(BoxFrame, 5)
 	Gradient(BoxFrame, Theme.Field, Theme.Field, 90)
 	local BoxStroke = Stroke(BoxFrame, Theme.Line, 1, 0.3)
 	return Block, BoxFrame, BoxStroke
@@ -667,17 +667,17 @@ local function NewDropdownShell(Card, Name)
 	local Block, BoxFrame = NewField(Card, Name)
 	local Value = New("TextLabel", {
 		Position = UDim2.fromOffset(12, 0),
-		Size = UDim2.new(1, -44, 1, 0),
+		Size = UDim2.new(1, -30, 1, 0),
 		Font = Enum.Font.GothamMedium,
-		TextSize = 14,
+		TextSize = 13,
 		TextColor3 = Theme.Sub,
 		TextXAlignment = Enum.TextXAlignment.Left,
 		TextTruncate = Enum.TextTruncate.AtEnd,
 		Parent = BoxFrame,
 	})
-	local Chevron = MakeIcon(BoxFrame, { "layout-panel-left", "panel-left", "layout-dashboard", "layout-template" }, 20, Theme.Muted)
+	local Chevron = MakeIcon(BoxFrame, { "layout-panel-left", "panel-left", "layout-dashboard", "layout-template" }, 14, Theme.Muted)
 	Chevron.AnchorPoint = Vector2.new(1, 0.5)
-	Chevron.Position = UDim2.new(1, -10, 0.5, 0)
+	Chevron.Position = UDim2.new(1, -8, 0.5, 0)
 	local Box = New("TextButton", {
 		Size = UDim2.fromScale(1, 1),
 		BackgroundTransparency = 1,
@@ -685,7 +685,7 @@ local function NewDropdownShell(Card, Name)
 		Parent = BoxFrame,
 	})
 	local List = New("Frame", {
-		Position = UDim2.new(0, 0, 1, 12),
+		Position = UDim2.new(0, 0, 1, 6),
 		Size = UDim2.new(1, 0, 0, 0),
 		AutomaticSize = Enum.AutomaticSize.Y,
 		BackgroundColor3 = Color3.fromRGB(29, 30, 32),
@@ -801,18 +801,19 @@ end
 function Container:AddSeparator()
 	local Card = CardOf(self)
 	local Wrap = New("Frame", {
-		Size = UDim2.new(1, 0, 0, 9),
+		Size = UDim2.new(1, 0, 0, 12),
 		BackgroundTransparency = 1,
 		LayoutOrder = NextOrder(Card),
 		Parent = Card,
 	})
-	New("Frame", {
-		Position = UDim2.fromOffset(12, 4),
-		Size = UDim2.new(1, -24, 0, 1),
-		BackgroundColor3 = Theme.Line,
-		BackgroundTransparency = 0.3,
+	local Pill = New("Frame", {
+		Position = UDim2.fromOffset(12, 3),
+		Size = UDim2.new(1, -24, 0, 6),
+		BackgroundColor3 = Theme.Field,
 		Parent = Wrap,
 	})
+	Corner(Pill, 3)
+	Stroke(Pill, Theme.Line, 1, 0.6)
 	return Wrap
 end
 
@@ -832,7 +833,7 @@ function Container:AddToggle(Name, Info)
 		Size = UDim2.new(1, -120, 1, 0),
 		Text = Name,
 		Font = Enum.Font.GothamMedium,
-		TextSize = 14,
+		TextSize = 13,
 		TextColor3 = Theme.Muted,
 		TextXAlignment = Enum.TextXAlignment.Left,
 		TextTruncate = Enum.TextTruncate.AtEnd,
@@ -893,12 +894,12 @@ function Container:AddToggle(Name, Info)
 		Set(not State)
 	end)
 
-	local Used = 17 + 44
+	local Used = 12 + 34
 
 	if Info.Color then
-		Used += 12
+		Used += 8
 		MakeColorSwatch(Row, Key .. "/Color", Info.Color, -Used, Info.ColorCallback)
-		Used += 20
+		Used += 14
 	end
 
 	if Info.Keybind then
@@ -909,12 +910,12 @@ function Container:AddToggle(Name, Info)
 		local BoxFrame = New("Frame", {
 			AnchorPoint = Vector2.new(1, 0.5),
 			Position = UDim2.new(1, -Used, 0.5, 0),
-			Size = UDim2.fromOffset(30, 22),
+			Size = UDim2.fromOffset(22, 16),
 			BackgroundColor3 = Color3.new(1, 1, 1),
 			Parent = Row,
 		})
-		Used += 30
-		Corner(BoxFrame, 5)
+		Used += 22
+		Corner(BoxFrame, 4)
 		Gradient(BoxFrame, Theme.ElementTop, Theme.ElementBottom, 90)
 		Stroke(BoxFrame, Theme.Line, 1, 0.4)
 		local Box = New("TextButton", {
@@ -922,7 +923,7 @@ function Container:AddToggle(Name, Info)
 			BackgroundTransparency = 1,
 			Text = BindKey and BindKey.Name or "-",
 			Font = Enum.Font.GothamMedium,
-			TextSize = 13,
+			TextSize = 10,
 			TextColor3 = Theme.Sub,
 			TextTruncate = Enum.TextTruncate.AtEnd,
 			ZIndex = 2,
@@ -950,7 +951,7 @@ function Container:AddToggle(Name, Info)
 		end, Own)
 	end
 
-	Label.Size = UDim2.new(1, -(18 + Used + 8), 1, 0)
+	Label.Size = UDim2.new(1, -(12 + Used + 6), 1, 0)
 
 	Apply(Info.Default)
 
@@ -980,71 +981,71 @@ function Container:AddSlider(Name, Info)
 	if Inc <= 0 then Inc = 1 end
 
 	local Block = New("Frame", {
-		Size = UDim2.new(1, 0, 0, 52),
+		Size = UDim2.new(1, 0, 0, 40),
 		BackgroundTransparency = 1,
 		LayoutOrder = NextOrder(Card),
 		Parent = Card,
 	})
 	New("TextLabel", {
-		Position = UDim2.fromOffset(18, 4),
-		Size = UDim2.new(0.6, 0, 0, 24),
+		Position = UDim2.fromOffset(12, 2),
+		Size = UDim2.new(0.6, 0, 0, 20),
 		Text = Name,
 		Font = Enum.Font.GothamBold,
-		TextSize = 14,
+		TextSize = 13,
 		TextColor3 = Theme.Text,
 		TextXAlignment = Enum.TextXAlignment.Left,
 		Parent = Block,
 	})
 	local ValueBox = New("Frame", {
 		AnchorPoint = Vector2.new(1, 0),
-		Position = UDim2.new(1, -17, 0, 5),
-		Size = UDim2.fromOffset(52, 22),
+		Position = UDim2.new(1, -12, 0, 4),
+		Size = UDim2.fromOffset(42, 16),
 		BackgroundColor3 = Color3.new(1, 1, 1),
 		Parent = Block,
 	})
-	Corner(ValueBox, 6)
+	Corner(ValueBox, 4)
 	Gradient(ValueBox, Theme.ElementTop, Theme.ElementBottom, 90)
 	local ValueStroke = Stroke(ValueBox, Theme.Line, 1, 0.35)
 	local ValueText = New("TextBox", {
 		Size = UDim2.fromScale(1, 1),
 		BackgroundTransparency = 1,
 		Font = Enum.Font.GothamMedium,
-		TextSize = 13,
+		TextSize = 10,
 		TextColor3 = Theme.Sub,
 		ClearTextOnFocus = false,
 		Parent = ValueBox,
 	})
 	local Track = New("Frame", {
-		Position = UDim2.fromOffset(18, 31),
-		Size = UDim2.new(1, -35, 0, 8),
+		Position = UDim2.fromOffset(12, 27),
+		Size = UDim2.new(1, -24, 0, 4),
 		BackgroundColor3 = Color3.new(1, 1, 1),
 		Parent = Block,
 	})
-	Corner(Track, 4)
+	Corner(Track, 2)
 	Gradient(Track, Theme.Field, Theme.Field, 90)
 	local Fill = New("Frame", {
 		Size = UDim2.fromScale(0, 1),
 		BackgroundColor3 = Color3.new(1, 1, 1),
 		Parent = Track,
 	})
-	Corner(Fill, 4)
+	Corner(Fill, 2)
 	local FillGrad = Gradient(Fill, Theme.AccentDark, Theme.AccentLight, 0)
 	RegisterAccentGradient(FillGrad, 2)
 
 	local Knob = New("Frame", {
 		AnchorPoint = Vector2.new(0.5, 0.5),
 		Position = UDim2.fromScale(0, 0.5),
-		Size = UDim2.fromOffset(14, 14),
+		Size = UDim2.fromOffset(12, 12),
 		BackgroundColor3 = Color3.new(1, 1, 1),
 		ZIndex = 2,
 		Parent = Track,
 	})
-	Corner(Knob, 7)
+	Corner(Knob, 6)
 	Gradient(Knob, Color3.fromRGB(232, 232, 244), Color3.fromRGB(216, 217, 236), 90)
 	Stroke(Knob, Theme.Field, 2)
 	local Hit = New("TextButton", {
-		Position = UDim2.fromOffset(18, 20),
-		Size = UDim2.new(1, -35, 0, 30),
+		Position = UDim2.fromOffset(12, 16),
+		Size = UDim2.new(1, -24, 0, 22),
 		BackgroundTransparency = 1,
 		ZIndex = 3,
 		Parent = Block,
@@ -1164,7 +1165,7 @@ function Container:AddDropdown(Name, Info)
 			BackgroundTransparency = 1,
 			Text = tostring(Option),
 			Font = Enum.Font.GothamMedium,
-			TextSize = 14,
+			TextSize = 13,
 			TextColor3 = Theme.Muted,
 			TextXAlignment = Enum.TextXAlignment.Left,
 			LayoutOrder = OptIndex,
@@ -1293,7 +1294,7 @@ function Container:AddMultiDropdown(Name, Info)
 			BackgroundTransparency = 1,
 			Text = Text,
 			Font = Enum.Font.GothamMedium,
-			TextSize = 15,
+			TextSize = 13,
 			TextColor3 = Theme.Sub,
 			Parent = Holder,
 		})
@@ -1330,7 +1331,7 @@ function Container:AddMultiDropdown(Name, Info)
 			Size = UDim2.new(1, -44, 1, 0),
 			Text = tostring(Option),
 			Font = Enum.Font.GothamMedium,
-			TextSize = 14,
+			TextSize = 13,
 			TextColor3 = Theme.Muted,
 			TextXAlignment = Enum.TextXAlignment.Left,
 			TextTruncate = Enum.TextTruncate.AtEnd,
@@ -1392,7 +1393,7 @@ function Container:AddSearchDropdown(Name, Info)
 		Size = UDim2.new(1, -44, 1, 0),
 		BackgroundTransparency = 1,
 		Font = Enum.Font.GothamMedium,
-		TextSize = 15,
+		TextSize = 13,
 		TextColor3 = Theme.Text,
 		PlaceholderText = "Search...",
 		PlaceholderColor3 = Theme.Muted,
@@ -1421,7 +1422,7 @@ function Container:AddSearchDropdown(Name, Info)
 		Size = UDim2.new(1, 0, 0, RowHeight),
 		Text = "No results found",
 		Font = Enum.Font.GothamMedium,
-		TextSize = 15,
+		TextSize = 13,
 		TextColor3 = Theme.Muted,
 		Visible = false,
 		LayoutOrder = #Values + 1,
@@ -1475,7 +1476,7 @@ function Container:AddSearchDropdown(Name, Info)
 			BackgroundTransparency = 1,
 			Text = tostring(Option),
 			Font = Enum.Font.GothamMedium,
-			TextSize = 14,
+			TextSize = 13,
 			TextColor3 = Theme.Muted,
 			TextXAlignment = Enum.TextXAlignment.Left,
 			TextTruncate = Enum.TextTruncate.AtEnd,
@@ -1595,7 +1596,7 @@ function Container:AddInput(Name, Info)
 		Size = UDim2.new(1, -24, 1, 0),
 		BackgroundTransparency = 1,
 		Font = Enum.Font.GothamMedium,
-		TextSize = 14,
+		TextSize = 13,
 		TextColor3 = Theme.Text,
 		PlaceholderText = Info.Placeholder or "",
 		PlaceholderColor3 = Theme.Muted,
@@ -1644,7 +1645,7 @@ function Container:AddColorPicker(Name, Info)
 		Size = UDim2.new(1, -80, 1, 0),
 		Text = Name,
 		Font = Enum.Font.GothamBold,
-		TextSize = 14,
+		TextSize = 13,
 		TextColor3 = Theme.Text,
 		TextXAlignment = Enum.TextXAlignment.Left,
 		Parent = Row,
@@ -1659,18 +1660,18 @@ function Container:AddButton(Name, Info)
 	local Card = CardOf(self)
 	local Key = KeyOf(self, Name, Info)
 	local Row = New("Frame", {
-		Size = UDim2.new(1, 0, 0, 56),
+		Size = UDim2.new(1, 0, 0, 36),
 		BackgroundTransparency = 1,
 		LayoutOrder = NextOrder(Card),
 		Parent = Card,
 	})
 	local Frame = New("Frame", {
-		Position = UDim2.fromOffset(14, 8),
-		Size = UDim2.new(1, -28, 0, 40),
+		Position = UDim2.fromOffset(12, 4),
+		Size = UDim2.new(1, -24, 0, 28),
 		BackgroundColor3 = Color3.new(1, 1, 1),
 		Parent = Row,
 	})
-	Corner(Frame, 8)
+	Corner(Frame, 6)
 	Gradient(Frame, Theme.ElementTop, Theme.ElementBottom, 90)
 	local Line = Stroke(Frame, Theme.Line, 1, 0.3)
 	local Button = New("TextButton", {
@@ -1678,7 +1679,7 @@ function Container:AddButton(Name, Info)
 		BackgroundTransparency = 1,
 		Text = Name,
 		Font = Enum.Font.GothamMedium,
-		TextSize = 14,
+		TextSize = 13,
 		TextColor3 = Theme.Text,
 		Parent = Frame,
 	})
@@ -2080,7 +2081,7 @@ local function BuildNotify()
 			Size = UDim2.new(1, -80, 0, 22),
 			Text = Title,
 			Font = Enum.Font.GothamBold,
-			TextSize = 14,
+			TextSize = 13,
 			TextColor3 = Theme.Text,
 			TextXAlignment = Enum.TextXAlignment.Left,
 			TextTruncate = Enum.TextTruncate.AtEnd,
@@ -2093,7 +2094,7 @@ local function BuildNotify()
 				Size = UDim2.new(1, -80, 0, InfoHeight),
 				Text = Info,
 				Font = Enum.Font.GothamMedium,
-				TextSize = 15,
+				TextSize = 13,
 				TextColor3 = Theme.Sub,
 				TextWrapped = true,
 				TextXAlignment = Enum.TextXAlignment.Left,
@@ -2562,7 +2563,7 @@ local function NewSideButton(Icons, Wide)
 			Size = UDim2.new(1, -40, 1, 0),
 			Text = "Search...",
 			Font = Enum.Font.GothamMedium,
-			TextSize = 15,
+			TextSize = 13,
 			TextColor3 = Theme.Muted,
 			TextXAlignment = Enum.TextXAlignment.Left,
 			Parent = Button,
@@ -2730,7 +2731,7 @@ function WindowMeta:AddTab(Name, Icon, Category)
 			BackgroundTransparency = 1,
 			Parent = Scroller,
 		})
-		New("UIListLayout", { Padding = UDim.new(0, 12), SortOrder = Enum.SortOrder.LayoutOrder, Parent = Column })
+		New("UIListLayout", { Padding = UDim.new(0, 10), SortOrder = Enum.SortOrder.LayoutOrder, Parent = Column })
 		return Column
 	end
 
@@ -2868,7 +2869,7 @@ function WindowMeta:LoadConfigManger()
 		Size = UDim2.new(1, -52, 0, 22),
 		Text = "Autoload: None",
 		Font = Enum.Font.GothamMedium,
-		TextSize = 15,
+		TextSize = 13,
 		TextColor3 = Theme.AccentLight,
 		TextXAlignment = Enum.TextXAlignment.Left,
 		Parent = Modal.Panel,
@@ -2979,7 +2980,7 @@ function WindowMeta:LoadConfigManger()
 				BackgroundTransparency = 1,
 				Text = ConfigName,
 				Font = Enum.Font.GothamMedium,
-				TextSize = 15,
+				TextSize = 13,
 				TextColor3 = Theme.Muted,
 				TextXAlignment = Enum.TextXAlignment.Left,
 				LayoutOrder = OrderIndex,
@@ -3032,7 +3033,7 @@ function WindowMeta:LoadConfigManger()
 			BackgroundTransparency = 1,
 			Text = Text,
 			Font = Enum.Font.GothamMedium,
-			TextSize = 15,
+			TextSize = 13,
 			TextColor3 = Theme.Text,
 			Parent = Frame,
 		})
@@ -3141,7 +3142,7 @@ function WindowMeta:LoadSerachManger()
 		Size = UDim2.fromOffset(120, 22),
 		Text = "",
 		Font = Enum.Font.GothamMedium,
-		TextSize = 15,
+		TextSize = 13,
 		TextColor3 = Theme.Muted,
 		TextXAlignment = Enum.TextXAlignment.Right,
 		Parent = Modal.Panel,
@@ -3540,14 +3541,14 @@ function Library:CreateWindow(Config)
 		BackgroundColor3 = Color3.new(1, 1, 1),
 		Parent = Gui,
 	})
-	Corner(Main, 10)
+	Corner(Main, 8)
 	Gradient(Main, Theme.WindowTop, Theme.WindowBottom, 45)
 	local MainStroke = Stroke(Main, Color3.new(1, 1, 1), 1, 0)
 	Gradient(MainStroke, Theme.LineLight, Theme.Line, 90, 0.2, 0.7)
 
 	Scale = New("UIScale", { Parent = Main })
 
-	local WindowShadow = MakeShadow(Gui, UDim2.fromOffset(BaseWidth + 50, BaseHeight + 50), Main.Position, 0.82, 0, Vector2.new(0.5, 0.5))
+	local WindowShadow = MakeShadow(Gui, UDim2.fromOffset(BaseWidth + 50, BaseHeight + 50), Main.Position, 0.9, 0, Vector2.new(0.5, 0.5))
 	local ShadowScale = New("UIScale", { Parent = WindowShadow })
 	local function SyncShadow()
 		ShadowScale.Scale = Scale.Scale
@@ -3598,7 +3599,7 @@ function Library:CreateWindow(Config)
 		BackgroundColor3 = Theme.SidebarBg,
 		Parent = Main,
 	})
-	Corner(Sidebar, 10)
+	Corner(Sidebar, 8)
 	New("Frame", {
 		Position = UDim2.new(1, -16, 0, 0),
 		Size = UDim2.new(0, 16, 1, 0),
