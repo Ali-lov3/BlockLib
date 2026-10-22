@@ -86,19 +86,19 @@ end
 local Theme = {
 	WindowTop = Color3.fromRGB(40, 40, 41),
 	WindowBottom = Color3.fromRGB(40, 40, 41),
-	SidebarBg = Color3.fromRGB(32, 31, 32),
-	CardTop = Color3.fromRGB(46, 47, 50),
-	CardBottom = Color3.fromRGB(46, 47, 50),
-	ElementTop = Color3.fromRGB(40, 42, 43),
-	ElementBottom = Color3.fromRGB(37, 39, 40),
-	Field = Color3.fromRGB(36, 38, 38),
+	SidebarBg = Color3.fromRGB(32, 30, 31),
+	CardTop = Color3.fromRGB(46, 47, 49),
+	CardBottom = Color3.fromRGB(46, 47, 49),
+	ElementTop = Color3.fromRGB(41, 42, 44),
+	ElementBottom = Color3.fromRGB(39, 41, 42),
+	Field = Color3.fromRGB(37, 39, 38),
 	Line = Color3.fromRGB(58, 59, 64),
 	LineLight = Color3.fromRGB(66, 67, 72),
 	SelectedTop = Color3.fromRGB(46, 47, 49),
 	SelectedBottom = Color3.fromRGB(46, 47, 49),
-	Accent = Color3.fromRGB(74, 118, 168),
-	AccentLight = Color3.fromRGB(86, 130, 182),
-	AccentDark = Color3.fromRGB(66, 106, 154),
+	Accent = Color3.fromRGB(74, 117, 170),
+	AccentLight = Color3.fromRGB(86, 129, 183),
+	AccentDark = Color3.fromRGB(66, 105, 157),
 	Text = Color3.fromRGB(232, 232, 236),
 	Sub = Color3.fromRGB(150, 151, 157),
 	Muted = Color3.fromRGB(122, 123, 129),
@@ -175,6 +175,24 @@ local function Gradient(Parent, From, To, Rotation, TransFrom, TransTo)
 		Color = ColorSequence.new(From, To),
 		Rotation = Rotation or 0,
 		Transparency = NumberSequence.new(TransFrom or 0, TransTo or 0),
+		Parent = Parent,
+	})
+end
+
+local ShadowAsset = "rbxassetid://6014261993"
+
+local function MakeShadow(Parent, Size, Position, Transparency, ZIndex, AnchorPoint)
+	return New("ImageLabel", {
+		Name = "Shadow",
+		AnchorPoint = AnchorPoint or Vector2.new(0, 0),
+		Position = Position,
+		Size = Size,
+		Image = ShadowAsset,
+		ImageColor3 = Color3.new(0, 0, 0),
+		ImageTransparency = Transparency or 0.5,
+		ScaleType = Enum.ScaleType.Slice,
+		SliceCenter = Rect.new(49, 49, 450, 450),
+		ZIndex = ZIndex or 0,
 		Parent = Parent,
 	})
 end
@@ -270,6 +288,7 @@ local function BuildPicker()
 		ZIndex = 301,
 		Parent = ColorCatcher,
 	})
+	local PopupShadow = MakeShadow(ColorCatcher, UDim2.fromOffset(PickerWidth + 44, PickerHeight + 44), UDim2.fromOffset(0, 0), 0.45, 300)
 	Corner(ColorPopup, 12)
 	Stroke(ColorPopup, Theme.LineLight, 1, 0.4)
 
@@ -462,6 +481,7 @@ local function BuildPicker()
 			Y = Rel.Y - PickerHeight - 8
 		end
 		ColorPopup.Position = UDim2.fromOffset(X, math.max(Y, 8))
+		PopupShadow.Position = UDim2.fromOffset(X - 22, math.max(Y, 8) - 14)
 		PickerRefresh()
 		ColorCatcher.Visible = true
 	end
@@ -674,6 +694,15 @@ local function NewDropdownShell(Card, Name)
 		ZIndex = 20,
 		Parent = BoxFrame,
 	})
+	local ListShadow = MakeShadow(BoxFrame, UDim2.new(1, 44, 0, 44), UDim2.new(0, -22, 1, 0), 0.4, 19)
+	ListShadow.Visible = false
+	List.GetPropertyChangedSignal(List, "Visible").Connect(List.GetPropertyChangedSignal(List, "Visible"), function()
+		ListShadow.Visible = List.Visible
+	end)
+	List.GetPropertyChangedSignal(List, "AbsoluteSize").Connect(List.GetPropertyChangedSignal(List, "AbsoluteSize"), function()
+		local S = Scale and Scale.Scale or 1
+		ListShadow.Size = UDim2.new(1, 44, 0, List.AbsoluteSize.Y / math.max(S, 0.01) + 44)
+	end)
 	Corner(List, 8)
 	Stroke(List, Theme.Line, 1, 0.2)
 	local Layout = New("UIListLayout", { SortOrder = Enum.SortOrder.LayoutOrder, Parent = List })
@@ -831,7 +860,7 @@ function Container:AddToggle(Name, Info)
 		Tween(OnLayer, { BackgroundTransparency = State and 0 or 1 })
 		Tween(Knob, {
 			Position = State and UDim2.new(1, -19, 0.5, 0) or UDim2.new(0, 3, 0.5, 0),
-			BackgroundColor3 = State and Color3.new(1, 1, 1) or Color3.fromRGB(118, 119, 125),
+			BackgroundColor3 = State and Color3.new(1, 1, 1) or Color3.fromRGB(110, 110, 118),
 		})
 		Tween(Label, { TextColor3 = State and Theme.Text or Theme.Muted })
 		if Group then Group.Set(State) end
@@ -3319,7 +3348,7 @@ function WindowMeta:LoadSerachManger()
 			local Row = New("Frame", {
 				Position = UDim2.fromOffset(0, SlideFrom),
 				Size = UDim2.fromScale(1, 1),
-				BackgroundColor3 = Color3.fromRGB(46, 47, 50),
+				BackgroundColor3 = Color3.fromRGB(46, 47, 49),
 				BackgroundTransparency = 1,
 				Parent = Slot,
 			})
@@ -3373,7 +3402,7 @@ function WindowMeta:LoadSerachManger()
 				Tween(SubLabel, { Position = UDim2.fromOffset(34, 34) }, 0.25, Enum.EasingStyle.Quint)
 			end)
 			Hit.MouseLeave.Connect(Hit.MouseLeave, function()
-				Tween(Row, { BackgroundColor3 = Color3.fromRGB(46, 47, 50) }, 0.2)
+				Tween(Row, { BackgroundColor3 = Color3.fromRGB(46, 47, 49) }, 0.2)
 				Tween(RowStroke, { Color = Theme.Line, Transparency = 0.6 }, 0.2)
 				Tween(Bar, { Size = UDim2.fromOffset(4, 32) }, 0.2)
 				Tween(TitleLabel, { Position = UDim2.fromOffset(28, 8) }, 0.25, Enum.EasingStyle.Quint)
@@ -3500,6 +3529,18 @@ function Library:CreateWindow(Config)
 	Gradient(MainStroke, Theme.LineLight, Theme.Line, 90, 0.2, 0.7)
 
 	Scale = New("UIScale", { Parent = Main })
+
+	local WindowShadow = MakeShadow(Gui, UDim2.fromOffset(BaseWidth + 110, BaseHeight + 110), Main.Position, 0.35, 0, Vector2.new(0.5, 0.5))
+	local ShadowScale = New("UIScale", { Parent = WindowShadow })
+	local function SyncShadow()
+		ShadowScale.Scale = Scale.Scale
+		WindowShadow.Visible = Main.Visible
+		WindowShadow.Position = UDim2.new(Main.Position.X.Scale, Main.Position.X.Offset, Main.Position.Y.Scale, Main.Position.Y.Offset + 8 * Scale.Scale)
+	end
+	Main.GetPropertyChangedSignal(Main, "Position").Connect(Main.GetPropertyChangedSignal(Main, "Position"), SyncShadow)
+	Main.GetPropertyChangedSignal(Main, "Visible").Connect(Main.GetPropertyChangedSignal(Main, "Visible"), SyncShadow)
+	Scale.GetPropertyChangedSignal(Scale, "Scale").Connect(Scale.GetPropertyChangedSignal(Scale, "Scale"), SyncShadow)
+	SyncShadow()
 
 	UpdateScale = function()
 		local View = Gui.AbsoluteSize
