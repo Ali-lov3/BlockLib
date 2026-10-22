@@ -84,22 +84,22 @@ local function IsAsset(Icon)
 end
 
 local Theme = {
-	WindowTop = Color3.fromRGB(24, 24, 24),
-	WindowBottom = Color3.fromRGB(10, 10, 10),
-	CardTop = Color3.fromRGB(30, 30, 30),
-	CardBottom = Color3.fromRGB(22, 22, 22),
-	ElementTop = Color3.fromRGB(40, 40, 40),
-	ElementBottom = Color3.fromRGB(30, 30, 30),
-	Line = Color3.fromRGB(44, 44, 44),
-	LineLight = Color3.fromRGB(68, 68, 68),
-	SelectedTop = Color3.fromRGB(40, 40, 40),
-	SelectedBottom = Color3.fromRGB(30, 30, 30),
-	Accent = Color3.fromRGB(235, 235, 235),
-	AccentLight = Color3.fromRGB(255, 255, 255),
-	AccentDark = Color3.fromRGB(130, 130, 130),
-	Text = Color3.fromRGB(240, 240, 240),
-	Sub = Color3.fromRGB(158, 158, 158),
-	Muted = Color3.fromRGB(122, 122, 122),
+	WindowTop = Color3.fromRGB(31, 31, 36),
+	WindowBottom = Color3.fromRGB(27, 27, 32),
+	CardTop = Color3.fromRGB(36, 36, 42),
+	CardBottom = Color3.fromRGB(34, 34, 40),
+	ElementTop = Color3.fromRGB(44, 44, 51),
+	ElementBottom = Color3.fromRGB(40, 40, 47),
+	Line = Color3.fromRGB(50, 50, 58),
+	LineLight = Color3.fromRGB(62, 62, 71),
+	SelectedTop = Color3.fromRGB(50, 50, 57),
+	SelectedBottom = Color3.fromRGB(50, 50, 57),
+	Accent = Color3.fromRGB(82, 134, 224),
+	AccentLight = Color3.fromRGB(112, 160, 242),
+	AccentDark = Color3.fromRGB(62, 108, 196),
+	Text = Color3.fromRGB(236, 236, 242),
+	Sub = Color3.fromRGB(162, 162, 172),
+	Muted = Color3.fromRGB(128, 128, 138),
 }
 
 local DefaultAccent = { Theme.Accent, Theme.AccentLight, Theme.AccentDark }
@@ -263,7 +263,7 @@ local function BuildPicker()
 	local ColorPopup = New("Frame", {
 		Name = "ColorPopup",
 		Size = UDim2.fromOffset(PickerWidth, PickerHeight),
-		BackgroundColor3 = Color3.fromRGB(30, 30, 30),
+		BackgroundColor3 = Color3.fromRGB(40, 40, 46),
 		Active = true,
 		ZIndex = 301,
 		Parent = ColorCatcher,
@@ -637,7 +637,7 @@ local function NewField(Card, Name)
 		Parent = Block,
 	})
 	Corner(BoxFrame, 7)
-	Gradient(BoxFrame, Color3.fromRGB(32, 32, 32), Color3.fromRGB(26, 26, 26), 90)
+	Gradient(BoxFrame, Color3.fromRGB(33, 33, 38), Color3.fromRGB(31, 31, 36), 90)
 	local BoxStroke = Stroke(BoxFrame, Theme.Line, 1, 0.3)
 	return Block, BoxFrame, BoxStroke
 end
@@ -667,7 +667,7 @@ local function NewDropdownShell(Card, Name)
 		Position = UDim2.new(0, 0, 1, 12),
 		Size = UDim2.new(1, 0, 0, 0),
 		AutomaticSize = Enum.AutomaticSize.Y,
-		BackgroundColor3 = Color3.fromRGB(18, 18, 18),
+		BackgroundColor3 = Color3.fromRGB(26, 26, 30),
 		Visible = false,
 		ZIndex = 20,
 		Parent = BoxFrame,
@@ -798,7 +798,7 @@ function Container:AddToggle(Name, Info)
 		Parent = Row,
 	})
 	Corner(Switch, 13)
-	Gradient(Switch, Color3.fromRGB(30, 30, 30), Color3.fromRGB(40, 40, 40), 90)
+	Gradient(Switch, Color3.fromRGB(40, 40, 46), Color3.fromRGB(46, 46, 52), 90)
 	local OnLayer = New("Frame", {
 		Size = UDim2.fromScale(1, 1),
 		BackgroundColor3 = Color3.new(1, 1, 1),
@@ -829,7 +829,7 @@ function Container:AddToggle(Name, Info)
 		Tween(OnLayer, { BackgroundTransparency = State and 0 or 1 })
 		Tween(Knob, {
 			Position = State and UDim2.new(1, -22, 0.5, 0) or UDim2.new(0, 4, 0.5, 0),
-			BackgroundColor3 = State and Color3.fromRGB(14, 14, 14) or Color3.new(1, 1, 1),
+			BackgroundColor3 = State and Color3.new(1, 1, 1) or Color3.fromRGB(92, 92, 100),
 		})
 		Tween(Label, { TextColor3 = State and Theme.Text or Theme.Muted })
 		if Group then Group.Set(State) end
@@ -973,7 +973,7 @@ function Container:AddSlider(Name, Info)
 		Parent = Block,
 	})
 	Corner(Track, 6)
-	Gradient(Track, Color3.fromRGB(10, 10, 10), Color3.fromRGB(20, 20, 20), 90)
+	Gradient(Track, Color3.fromRGB(22, 22, 26), Color3.fromRGB(26, 26, 31), 90)
 	local Fill = New("Frame", {
 		Size = UDim2.fromScale(0, 1),
 		BackgroundColor3 = Color3.new(1, 1, 1),
@@ -993,7 +993,7 @@ function Container:AddSlider(Name, Info)
 	})
 	Corner(Knob, 8)
 	Gradient(Knob, Color3.new(1, 1, 1), Color3.fromRGB(205, 205, 205), 90)
-	Stroke(Knob, Color3.fromRGB(14, 14, 14), 2)
+	Stroke(Knob, Color3.fromRGB(30, 30, 34), 2)
 	local Hit = New("TextButton", {
 		Position = UDim2.fromOffset(18, 32),
 		Size = UDim2.new(1, -35, 0, 32),
@@ -1653,7 +1653,7 @@ function Container:AddViewport(Name, Info)
 	local Holder = New("Frame", {
 		Position = UDim2.fromOffset(14, 10),
 		Size = UDim2.new(1, -28, 0, Height),
-		BackgroundColor3 = Color3.fromRGB(18, 18, 18),
+		BackgroundColor3 = Color3.fromRGB(26, 26, 30),
 		Parent = Block,
 	})
 	Corner(Holder, 8)
@@ -2379,7 +2379,7 @@ local function NewModal(Title, Width, Height)
 		AnchorPoint = Vector2.new(0.5, 0.5),
 		Position = UDim2.fromScale(0.5, 0.54),
 		Size = UDim2.fromOffset(Width, Height),
-		BackgroundColor3 = Color3.fromRGB(22, 22, 22),
+		BackgroundColor3 = Color3.fromRGB(30, 30, 35),
 		GroupTransparency = 1,
 		Active = true,
 		Parent = Modal.Overlay,
@@ -2468,7 +2468,7 @@ local function NewSideButton(Icons, Wide)
 		local Button = New("TextButton", {
 			Position = UDim2.fromOffset(16, BaseHeight - 61),
 			Size = UDim2.fromOffset(SidebarWidth - 32, 45),
-			BackgroundColor3 = Color3.fromRGB(34, 34, 34),
+			BackgroundColor3 = Color3.fromRGB(38, 38, 44),
 			Parent = Sidebar,
 		})
 		Corner(Button, 7)
@@ -2503,7 +2503,7 @@ local function NewSideButton(Icons, Wide)
 	local Button = New("TextButton", {
 		Position = UDim2.fromOffset(16 + (Size + Gap) * SideSlots, BaseHeight - 61 - 10 - Size),
 		Size = UDim2.fromOffset(Size, Size),
-		BackgroundColor3 = Color3.fromRGB(34, 34, 34),
+		BackgroundColor3 = Color3.fromRGB(38, 38, 44),
 		Parent = Sidebar,
 	})
 	SideSlots += 1
@@ -2547,8 +2547,8 @@ local function SelectTab(Name)
 		Tween(Tab.Button, { BackgroundTransparency = On and 0 or 1 })
 		Tween(Tab.Stroke, { Transparency = 1 })
 		Tab.Text.Font = On and Enum.Font.GothamBold or Enum.Font.GothamMedium
-		Tween(Tab.Text, { TextColor3 = On and Color3.new(1, 1, 1) or Theme.Muted })
-		Tween(Tab.Icon, { ImageColor3 = On and Color3.new(1, 1, 1) or Theme.Muted })
+		Tween(Tab.Text, { TextColor3 = On and Color3.new(1, 1, 1) or Theme.Sub })
+		Tween(Tab.Icon, { ImageColor3 = On and Color3.new(1, 1, 1) or Theme.Sub })
 	end
 end
 
@@ -2601,14 +2601,14 @@ function WindowMeta:AddTab(Name, Icon, Category)
 
 	local Button = New("TextButton", {
 		Size = UDim2.new(1, 0, 0, 45),
-		BackgroundColor3 = Color3.fromRGB(48, 48, 48),
+		BackgroundColor3 = Color3.fromRGB(50, 50, 57),
 		BackgroundTransparency = 1,
 		LayoutOrder = TabOrder,
 		Parent = Items,
 	})
 	Corner(Button, 7)
 	local ButtonStroke = Stroke(Button, Theme.LineLight, 1, 1)
-	local TabIcon = MakeIcon(Button, Icon or "layers", 24, Theme.Muted)
+	local TabIcon = MakeIcon(Button, Icon or "layers", 24, Theme.Sub)
 	TabIcon.Position = UDim2.fromOffset(13, 10)
 	local TabText = New("TextLabel", {
 		Position = UDim2.fromOffset(56, 0),
@@ -2616,7 +2616,7 @@ function WindowMeta:AddTab(Name, Icon, Category)
 		Text = Name,
 		Font = Enum.Font.GothamMedium,
 		TextSize = 18,
-		TextColor3 = Theme.Muted,
+		TextColor3 = Theme.Sub,
 		TextXAlignment = Enum.TextXAlignment.Left,
 		TextTruncate = Enum.TextTruncate.AtEnd,
 		Parent = Button,
@@ -2660,14 +2660,14 @@ function WindowMeta:AddTab(Name, Icon, Category)
 	end)
 	Button.MouseEnter.Connect(Button.MouseEnter, function()
 		if Current ~= Name then
-			Tween(TabText, { TextColor3 = Theme.Sub })
-			Tween(TabIcon, { ImageColor3 = Theme.Sub })
+			Tween(TabText, { TextColor3 = Theme.Text })
+			Tween(TabIcon, { ImageColor3 = Theme.Text })
 		end
 	end)
 	Button.MouseLeave.Connect(Button.MouseLeave, function()
 		if Current ~= Name then
-			Tween(TabText, { TextColor3 = Theme.Muted })
-			Tween(TabIcon, { ImageColor3 = Theme.Muted })
+			Tween(TabText, { TextColor3 = Theme.Sub })
+			Tween(TabIcon, { ImageColor3 = Theme.Sub })
 		end
 	end)
 
@@ -2820,7 +2820,7 @@ function WindowMeta:LoadConfigManger()
 		Parent = ConfigCard,
 	})
 	Corner(InputFrame, 7)
-	Gradient(InputFrame, Color3.fromRGB(32, 32, 32), Color3.fromRGB(26, 26, 26), 90)
+	Gradient(InputFrame, Color3.fromRGB(33, 33, 38), Color3.fromRGB(31, 31, 36), 90)
 	Stroke(InputFrame, Theme.Line, 1, 0.3)
 	local ConfigBox = New("TextBox", {
 		Position = UDim2.fromOffset(12, 0),
@@ -2843,7 +2843,7 @@ function WindowMeta:LoadConfigManger()
 		Parent = ConfigCard,
 	})
 	Corner(DropdownFrame, 7)
-	Gradient(DropdownFrame, Color3.fromRGB(32, 32, 32), Color3.fromRGB(26, 26, 26), 90)
+	Gradient(DropdownFrame, Color3.fromRGB(33, 33, 38), Color3.fromRGB(31, 31, 36), 90)
 	Stroke(DropdownFrame, Theme.Line, 1, 0.3)
 
 	local DropdownValue = New("TextLabel", {
@@ -2870,7 +2870,7 @@ function WindowMeta:LoadConfigManger()
 		Position = UDim2.new(0, 0, 1, 8),
 		Size = UDim2.new(1, 0, 0, 0),
 		AutomaticSize = Enum.AutomaticSize.Y,
-		BackgroundColor3 = Color3.fromRGB(18, 18, 18),
+		BackgroundColor3 = Color3.fromRGB(26, 26, 30),
 		Visible = false,
 		ZIndex = 50,
 		Parent = DropdownFrame,
@@ -3071,7 +3071,7 @@ function WindowMeta:LoadSerachManger()
 		Parent = Modal.Panel,
 	})
 	Corner(ModalSearch, 12)
-	Gradient(ModalSearch, Color3.fromRGB(28, 28, 28), Color3.fromRGB(22, 22, 22), 90)
+	Gradient(ModalSearch, Color3.fromRGB(36, 36, 42), Color3.fromRGB(30, 30, 35), 90)
 	local ModalStroke = Stroke(ModalSearch, Theme.Line, 1, 0.1)
 	local ModalIcon = MakeIcon(ModalSearch, { "search" }, 24, Theme.Muted)
 	ModalIcon.Position = UDim2.fromOffset(16, 15)
@@ -3282,7 +3282,7 @@ function WindowMeta:LoadSerachManger()
 			local Row = New("Frame", {
 				Position = UDim2.fromOffset(0, SlideFrom),
 				Size = UDim2.fromScale(1, 1),
-				BackgroundColor3 = Color3.fromRGB(32, 32, 32),
+				BackgroundColor3 = Color3.fromRGB(33, 33, 38),
 				BackgroundTransparency = 1,
 				Parent = Slot,
 			})
@@ -3329,14 +3329,14 @@ function WindowMeta:LoadSerachManger()
 				Parent = Row,
 			})
 			Hit.MouseEnter.Connect(Hit.MouseEnter, function()
-				Tween(Row, { BackgroundColor3 = Color3.fromRGB(44, 44, 44) }, 0.2)
+				Tween(Row, { BackgroundColor3 = Color3.fromRGB(46, 46, 54) }, 0.2)
 				Tween(RowStroke, { Color = Theme.Accent, Transparency = 0.45 }, 0.2)
 				Tween(Bar, { Size = UDim2.fromOffset(4, 40) }, 0.3, Enum.EasingStyle.Back)
 				Tween(TitleLabel, { Position = UDim2.fromOffset(34, 8) }, 0.25, Enum.EasingStyle.Quint)
 				Tween(SubLabel, { Position = UDim2.fromOffset(34, 34) }, 0.25, Enum.EasingStyle.Quint)
 			end)
 			Hit.MouseLeave.Connect(Hit.MouseLeave, function()
-				Tween(Row, { BackgroundColor3 = Color3.fromRGB(32, 32, 32) }, 0.2)
+				Tween(Row, { BackgroundColor3 = Color3.fromRGB(33, 33, 38) }, 0.2)
 				Tween(RowStroke, { Color = Theme.Line, Transparency = 0.6 }, 0.2)
 				Tween(Bar, { Size = UDim2.fromOffset(4, 32) }, 0.2)
 				Tween(TitleLabel, { Position = UDim2.fromOffset(28, 8) }, 0.25, Enum.EasingStyle.Quint)
